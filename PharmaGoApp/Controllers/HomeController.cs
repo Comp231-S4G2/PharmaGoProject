@@ -10,6 +10,7 @@ namespace PharmaGoApp.Controllers
 {
     public class HomeController : Controller
     {
+        //Main Controller
         public IActionResult Index()
         {
             return View();
