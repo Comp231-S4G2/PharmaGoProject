@@ -1,0 +1,11 @@
+We are following N-Layer Architecture, where each layer has its own responsibilities and communicates with each other to accomplish the task.
+Based on our need and following Separation of concern and SOLID design principles, we are creating following layers:
+1.	Business Object Layer(BOL)
+It is mainly Collection of POCO(Plain Old CLR Object) classes used to establish mapping with table following EF principle.
+2.	Data Access Layer(DAL)
+               
+                
+
+3.	Business Logic Layer(BLL)
+
+4.	MVC/UI Layer
