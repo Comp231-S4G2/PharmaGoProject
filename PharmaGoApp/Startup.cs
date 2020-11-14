@@ -14,6 +14,9 @@ namespace PharmaGoApp
 {
     public class Startup
     {
+
+        //Configure all the 3rd app services here
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
