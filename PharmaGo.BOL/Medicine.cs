@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿#region Header
+//POCO class of medicine is created here
+#endregion
 
 namespace PharmaGo.BOL
 {
