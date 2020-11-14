@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pharmaproject",
+  "private_key_id": "c070259b332378a241752378997fa6c4a1a3fc21",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCT+Pof7ISuwUIq\n/5iDpCiGFbGKTijdjS8acCULp3d1z9VRRNXc+mSGiQJJQyN+X8Hz+zceY9oJya1A\nVNVmMsYWjv33hTPeb5qD5Fn+i2iVUU+msY1u+g1ssdYczipAaJpG3qhbbqkYuPIi\nu4a+K2XNThJVbd1Uw+LD5CL3PKhGGbGE60IESaC1oVG7Jlj319mXUI+1+YYAxacg\njZ8nXfL55QCiaUkO5iRrI/qaD6Dnm5IGSh9p3tUw6+m8SozOKUo7L+2pktZE3e1c\nPDxuYfcrlPlq4BKTUIS0o+49c1cyB4YEl+913GCWZBlBd5BjMCiV3MrZ02I7kobV\nmcsmC+/TAgMBAAECggEAAp9bg3xUH6rCKvPrto2OwE2bH2niNIb/ijbpmSrHJbng\nvHd9WNTBOlcsSLMdamx1CgduQyYe46SE4wp927lTpGu1WZEtSahtsx+1bpr26AqQ\nYFJuQMTCvyXptwn6Wrjf3xisIC62ZX9Fn1L2gOFRBRH4pjXzwcBVAQbGjd4v10ov\nYRutz6RBQCmrpnBeJIzffe0T5A/gMZ2KNRlfTRmtZVFcyW/TMyW3x7zoi78lfWAl\nvZy4JUiah0M4Epe09kKWDRtc4q3bFbCGfihDVAr6S8i6JmrUy606Yk0JcO2SlfdL\nx0EBwAkgrWmkfYGkUKo8PprfuNe0oMiHW8LDHGLPEQKBgQDK2oHWz+HoRwGUPYvS\n+8FA4p8A23QXfmxodwfz9IuwcaQkF0K1VxDMITdSE+KQX+kdR56hRKP4B4WxYW5t\n5kbq+04tg/PSCavKnVbQFYKjGsIA+NE22J8GT+PHxcouck+0L/GaZeT8oi/u0wCC\nAVEyWyzuCyQoKdr8QrgAcle1wwKBgQC6vZL7m/sVrnLRoi/UW0yyUSphTyqtxGsi\n+IUHjdpqbTJm5EebjG6KxWtwSWmDd1te3hYcnaBKn0Lhqs4c7e9OrTizr1IluQXL\nUKMx31yp90CGr1Wr5lQHXmBUwphnxq/Uy4zf6G5AdbsvW5digl6Yl6vu8WoGt6Wo\nQ7rrLdNssQKBgCWK1RbNeHDFm2w1C8irYTPB/U1qUAz9D9Exnl4u9x9bmNY5G9Z1\n25z71MIy/e5cYcdSdvA/xNzlf3+5mXdrc9qPUgOodRp9QbcI8YUnRfsru5X0drvg\n0WWYqX5Sg72e2FNvwBYkH4IF/jsEAAcPeViJeUJA+5sXS/j93BHxF3yDAoGBAIx/\nbULZDIQ3iDOpLws61e2jm5szEQ1EJsdc69nPJHHGTpGTVzz034aRGlCVK0m6V4h8\n124YOi1qvctD02d4rQAo2+x1D/1Jw85AkUhIoVNPr8Cl0nNPDBGvNBMRhdEub8RO\nkWM1YR4mdfsfkjqPk9SC6N0RzY/YRE7hBpVDGTtBAoGABq63U4lyj21tehnhknzY\n5iFYdh/2dfIRR0d36A6xj1vgTBwVxTL2y+WFwqK9d/6dL4BHTb/Qj5LtoA7FnkQj\n5Q5Q7Jsk0i1TOVvDOQC8AYeykfv0x8WOr/J3t9FmqWIdUmdA2/c6xtisxJHriNJd\npCF9RjjZtMIscV3viJy6i8Q=\n-----END PRIVATE KEY-----\n",
+  "client_email": "pharma@pharmaproject.iam.gserviceaccount.com",
+  "client_id": "108957043779272097134",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/pharma%40pharmaproject.iam.gserviceaccount.com"
+}

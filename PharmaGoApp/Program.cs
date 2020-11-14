@@ -15,8 +15,8 @@ namespace PharmaGoApp
 {
     public class Program
     {
-        //Path to json file with credentials
-        static string keyFilepath = "path/to/file";
+        //Path to authentication service account file
+        static string keyFilepath = "..\\PharmaGoApp\\serviceKey\\pharmaproject-c070259b3323.json";
         //Actual project id from Google cloud
         static string projectId = "pharmaproject-777";
 
