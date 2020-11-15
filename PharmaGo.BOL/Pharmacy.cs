@@ -10,7 +10,7 @@ namespace PharmaGo.BOL
 {
     public class Pharmacy
     {
-        public long PharmaId { get; set; }
+        public long PharmacyId { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public string EmailId { get; set; }
