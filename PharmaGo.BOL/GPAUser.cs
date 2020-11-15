@@ -4,7 +4,8 @@ using System.Text;
 
 namespace PharmaGo.BOL
 {
-    class GPAUser
+    public class GPAUser
     {
+
     }
 }
