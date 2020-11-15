@@ -14,5 +14,6 @@ namespace PharmaGo.BOL
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public long? PharmaId { get; set; }
+        public Pharmacy Pharmacy { get; set; }
     }
 }
