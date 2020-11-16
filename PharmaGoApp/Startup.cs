@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PharmaGo.BLL;
 using PharmaGo.DAL;
 
 namespace PharmaGoApp
@@ -35,6 +36,18 @@ namespace PharmaGoApp
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            #region DALDI
+
+            services.AddTransient<IMedicinesDb, MedicinesDb>();
+           
+            #endregion
+
+            #region BLLDI
+
+            services.AddTransient<IMedicinesBS, MedicinesBS>();
+
+            #endregion
 
             services.AddDbContext<PGADbContext>(options =>
                                         options.UseSqlServer(Configuration.GetConnectionString("GPAConStr")));
