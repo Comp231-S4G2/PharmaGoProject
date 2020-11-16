@@ -4,4 +4,9 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PharmaGo.BOL\PharmaGo.BOL.csproj" />
+    <ProjectReference Include="..\PharmaGo.DAL\PharmaGo.DAL.csproj" />
+  </ItemGroup>
+
 </Project>
