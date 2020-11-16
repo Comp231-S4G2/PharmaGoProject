@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PharmaGo.BLL\PharmaGo.BLL.csproj" />
+    <ProjectReference Include="..\PharmaGo.BOL\PharmaGo.BOL.csproj" />
+    <ProjectReference Include="..\PharmaGo.DAL\PharmaGo.DAL.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -9,10 +9,14 @@ namespace PharmaGo.DAL
 {
     public class PGADbContext:DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public PGADbContext(DbContextOptions<PGADbContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=GPADb;Trusted_Connection=True;");
+
         }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=GPADb;Trusted_Connection=True;");
+        //}
 
         public DbSet<GPAUser> GPAUsers { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
