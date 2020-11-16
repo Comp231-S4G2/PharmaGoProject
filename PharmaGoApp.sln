@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGoApp", "PharmaGoApp\PharmaGoApp.csproj", "{4655B4E8-1259-49A5-AA14-1B2480822C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaGo.BOL", "PharmaGo.BOL\PharmaGo.BOL.csproj", "{6BDAA4E5-499B-43BD-98FC-D5A9A0AC93B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.BOL", "PharmaGo.BOL\PharmaGo.BOL.csproj", "{6BDAA4E5-499B-43BD-98FC-D5A9A0AC93B1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaGo.DAL", "PharmaGo.DAL\PharmaGo.DAL.csproj", "{BDFC7F3A-47EA-4810-B77B-85DFEC203B54}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{6BDAA4E5-499B-43BD-98FC-D5A9A0AC93B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BDAA4E5-499B-43BD-98FC-D5A9A0AC93B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BDAA4E5-499B-43BD-98FC-D5A9A0AC93B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDFC7F3A-47EA-4810-B77B-85DFEC203B54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDFC7F3A-47EA-4810-B77B-85DFEC203B54}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDFC7F3A-47EA-4810-B77B-85DFEC203B54}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDFC7F3A-47EA-4810-B77B-85DFEC203B54}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
