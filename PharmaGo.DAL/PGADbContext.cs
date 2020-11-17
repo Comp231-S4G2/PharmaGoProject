@@ -1,4 +1,6 @@
 ﻿#region Namespaces
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PharmaGo.BOL;
 #endregion
@@ -7,16 +9,20 @@ using PharmaGo.BOL;
 
 namespace PharmaGo.DAL
 {
-    public class PGADbContext:DbContext
+    public class PGADbContext:IdentityDbContext
     {
-        public PGADbContext(DbContextOptions<PGADbContext> options) : base(options)
+        public PGADbContext()
         {
 
         }
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=GPADb;Trusted_Connection=True;");
-        //}
+        public PGADbContext(DbContextOptions<PGADbContext> options) : base(options)
+        {
+            Database.EnsureCreated();
+        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=localhost\SQLEXPRESS;Database=GPADb;Trusted_Connection=True;");
+        }
 
         public DbSet<GPAUser> GPAUsers { get; set; }
         public DbSet<Medicine> Medicines { get; set; }
