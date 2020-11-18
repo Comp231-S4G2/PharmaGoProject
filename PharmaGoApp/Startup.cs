@@ -2,13 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PharmaGo.BLL;
+using PharmaGo.BOL;
+using PharmaGo.DAL;
 
 namespace PharmaGoApp
 {
@@ -34,6 +40,24 @@ namespace PharmaGoApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            #region DALDI
+
+            services.AddTransient<IMedicinesDb, MedicinesDb>();
+           
+            #endregion
+
+            #region BLLDI
+
+            services.AddTransient<IMedicinesBS, MedicinesBS>();
+
+            #endregion
+
+            services.AddDbContext<PGADbContext>(options =>
+                                        options.UseSqlServer(Configuration.GetConnectionString("GPAConStr")));
+
+            services.AddIdentity<GPAUser, IdentityRole>()
+                .AddEntityFrameworkStores<PGADbContext>()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -41,20 +65,12 @@ namespace PharmaGoApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                app.UseHsts();
-            }
+            app.UseDeveloperExceptionPage();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
