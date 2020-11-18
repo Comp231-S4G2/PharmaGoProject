@@ -43,6 +43,11 @@
                             <li><a asp-area="" asp-controller="Users" asp-action="Index">Manage Users</a></li>
                             <li><a asp-area="" asp-controller="Pharmacy" asp-action="Index">Manage Appointments</a></li>
                         }
+                        else
+                        {
+                            <li><a asp-area="" asp-controller="Customer" asp-action="Index">Manage Appointments</a></li>
+                        }
+
                         <li><a> Hello Mr./Ms. @User.Identity.Name</a>  </li>
                         <li><a asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a></li>
                     }
