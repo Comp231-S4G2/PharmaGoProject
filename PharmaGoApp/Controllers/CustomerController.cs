@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using PharmaGo.BLL;
 using PharmaGoApp.Models.Customer;
 
 namespace PharmaGoApp.Controllers
@@ -10,9 +11,11 @@ namespace PharmaGoApp.Controllers
     public class CustomerController : Controller
     {
         private static List<CustomerApointmentViewModel> customerAppointments = new List<CustomerApointmentViewModel>();
-        public CustomerController()
+       
+        private IStoreMedicineBS storeMedicineBS;
+        public CustomerController(IStoreMedicineBS _storeMedicineBS)
         {
-
+            storeMedicineBS = _storeMedicineBS;
         }
         public IActionResult Index()
         {
@@ -52,6 +55,13 @@ namespace PharmaGoApp.Controllers
             appointment.ScheduleTime = model.ScheduleTime;
             appointment.PatientName = model.PatientName;
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult SearchMedicine(string Name)
+        {
+            var medicines = storeMedicineBS.SearchMedicinesFromStore(Name);
+            return View(medicines);
         }
 
     }
