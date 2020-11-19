@@ -43,13 +43,17 @@ namespace PharmaGoApp
             #region DALDI
 
             services.AddTransient<IMedicinesDb, MedicinesDb>();
-           
+            services.AddTransient<IStockMedicinesDb, StockMedicinesDb>();
+            services.AddTransient<IPharmacyDb, PharmacyDb>();
+            services.AddTransient<IGPAUsersDb, GPAUsersDb>();
             #endregion
 
             #region BLLDI
 
             services.AddTransient<IMedicinesBS, MedicinesBS>();
-
+            services.AddTransient<IStoreMedicineBS, StoreMedicineBS>();
+            services.AddTransient<IPharmaciesBS, PharmaciesBS>();
+            services.AddTransient<IGPAUsersBS, GPAUsersBS>();
             #endregion
 
             services.AddDbContext<PGADbContext>(options =>
