@@ -54,5 +54,12 @@ namespace PharmaGoApp.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public IActionResult SearchMedicine(string Name)
+        {
+            
+            return View();
+        }
+
     }
 }
