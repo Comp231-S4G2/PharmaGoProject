@@ -73,5 +73,16 @@ namespace PharmaGoApp.Controllers
             return View(medicines);
         }
 
+        [HttpGet]
+        public IActionResult UploadPrescription()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult UploadPrescription(CustomerPrescriptionViewModel model)
+        {
+            return View();
+        }
     }
 }
