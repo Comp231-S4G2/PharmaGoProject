@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PharmaGo.BOL.StockMedicine>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Medicines Available</h2>
+
+<p>
+    <a asp-action="CreateStockMedicine">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medicine.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pharmacy.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <th>
+                @Html.DisplayFor(modelItem => item.Medicine.Name)
+            </th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pharmacy.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id= item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

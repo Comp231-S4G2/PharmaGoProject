@@ -47,6 +47,10 @@
                         }
                         else if (User.IsInRole("Pharmacist") || User.IsInRole("AsstPharmacist"))
                         {
+                            @if (User.IsInRole("AsstPharmacist"))
+                            {
+                                <li><a asp-area="" asp-controller="AsstPharmacist" asp-action="Index">Med Stock</a></li>
+                            }
                             <li><a asp-area="" asp-controller="Account" asp-action="TechSupportReview">Tech Support</a></li>
                         }
 

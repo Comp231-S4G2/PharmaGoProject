@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmaGo.DAL;
 
 namespace PharmaGo.DAL.Migrations
 {
     [DbContext(typeof(PGADbContext))]
-    partial class PGADbContextModelSnapshot : ModelSnapshot
+    [Migration("20201121163333_StockMedicineUpdated")]
+    partial class StockMedicineUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

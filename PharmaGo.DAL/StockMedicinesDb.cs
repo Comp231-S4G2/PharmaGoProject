@@ -54,13 +54,13 @@ namespace PharmaGo.DAL
 
         public StockMedicine GetStockMedicine(long stockMedicineId)
         {
-            var stockMedicine = dbContext.StockMedicines.Find(stockMedicineId);
+            var stockMedicine = GetStockMedicines().FirstOrDefault(x=>x.Id==stockMedicineId);
             return stockMedicine;
         }
 
         public IEnumerable<StockMedicine> GetStockMedicineByStore(long storeId)
         {
-            return dbContext.StockMedicines.Where(x => x.PharmaId== storeId);
+            return dbContext.StockMedicines.Where(x => x.PharmaId== storeId).Include(x => x.Medicine).Include(x => x.Pharmacy);
         }
 
         public IEnumerable<StockMedicine> GetStockMedicines()
