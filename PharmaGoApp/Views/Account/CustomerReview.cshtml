@@ -1,0 +1,50 @@
+﻿@model PharmaGoApp.Models.Customer.CustomerReviewViewModel
+
+@{
+    ViewData["Title"] = "CustomerReview";
+}
+
+<h2>Feedback Form</h2>
+<h3>
+    Rate from 0 to 5
+</h3>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CustomerReview">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FluShotServices" class="control-label"></label>
+                <input asp-for="FluShotServices" class="form-control" />
+                <span asp-validation-for="FluShotServices" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ApplicationPerformance" class="control-label"></label>
+                <input asp-for="ApplicationPerformance" class="form-control" />
+                <span asp-validation-for="ApplicationPerformance" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TechnicalAssistanceResponse" class="control-label"></label>
+                <input asp-for="TechnicalAssistanceResponse" class="form-control" />
+                <span asp-validation-for="TechnicalAssistanceResponse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="OverallReview" class="control-label"></label>
+                <input asp-for="OverallReview" class="form-control" />
+                <span asp-validation-for="OverallReview" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit Feedback" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<hr />
+<h3>
+    For any technical assistant please send queries at
+    <a>gopharmaApptechsupport@gmail.com</a>
+    Our technical team will be glad to help you...
+</h3>
+
+

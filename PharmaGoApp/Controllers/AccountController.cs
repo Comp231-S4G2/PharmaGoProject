@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
 using PharmaGo.BOL;
 using PharmaGoApp.Models;
+using PharmaGoApp.Models.Customer;
 
 namespace PharmaGoApp.Controllers
 {
@@ -130,6 +131,22 @@ namespace PharmaGoApp.Controllers
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             return user;
+        }
+
+        public IActionResult CustomerReview()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CustomerReview(CustomerReviewViewModel model)
+        {
+            return View();
+        }
+
+        public IActionResult TechSupportReview()
+        {
+            return View();
         }
     }
 }
