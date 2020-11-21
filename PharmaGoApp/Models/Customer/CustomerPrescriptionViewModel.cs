@@ -9,13 +9,9 @@ namespace PharmaGoApp.Models.Customer
 {
     public class CustomerPrescriptionViewModel
     {
-        public int ItemID { get; set; }
-        [Required(ErrorMessage = "Please Type Item Name")]
-        [Display(Name = "Item Name")]
-        public string ItemName { get; set; }
 
         [Required(ErrorMessage = "Please Upload File")]
-        [Display(Name = "Upload File")]
+        [Display(Name = "Upload Prescription File")]
         [ValidateImage] //This is custom Attribute class, Can be removed
         public IFormFile formFile { get; set; }
     }
