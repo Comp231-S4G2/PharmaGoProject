@@ -86,6 +86,7 @@ namespace PharmaGoApp.Controllers
                     return RedirectToAction("Index", "Home");
                 }
             }
+            ViewBag.ErrorMessage = "Invalid UserName Or Password";
             return View();
         }
 
@@ -116,6 +117,19 @@ namespace PharmaGoApp.Controllers
                 return RedirectToAction("Index", "Home");
             }
             return View();
+        }
+
+        public async Task<IActionResult> DeleteAccount()
+        {
+            var user = await GetLogedInUser();
+            gPAUsersBS.DeleteUser(user);
+            return RedirectToAction("LogOut");
+        }
+
+        private async Task<GPAUser> GetLogedInUser()
+        {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            return user;
         }
     }
 }
