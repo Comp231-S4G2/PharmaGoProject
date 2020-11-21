@@ -1,0 +1,42 @@
+﻿@model PharmaGoApp.Models.Pharmacy.CreateStockMedicineViewModel
+
+@{
+    ViewData["Title"] = "CreateStockMedicine";
+}
+
+<h2>Create Stock Medicine</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateStockMedicine">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MedName" class="control-label"></label>
+                <select asp-for="MedName" asp-items="@(new SelectList(ViewBag.Medicines,"Name","Name"))" class="form-control">
+                    <option>Select One</option>
+                </select>
+                <span asp-validation-for="MedName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MedId" class="control-label"></label>
+                <select asp-for="MedId" asp-items="@(new SelectList(ViewBag.Medicines,"MedicineId","Name"))" class="form-control">
+                    <option>Select One</option>
+                </select>
+                <span asp-validation-for="MedId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input asp-for="Quantity" class="form-control" />
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
