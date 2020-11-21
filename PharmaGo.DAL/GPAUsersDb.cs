@@ -8,10 +8,10 @@ namespace PharmaGo.DAL
     public interface IGPAUsersDb
     {
         IEnumerable<GPAUser> GetGPAUsers();
-        GPAUser GetGPAUser(long userId);
+        GPAUser GetGPAUser(string userId);
         bool CreateGPAUser(GPAUser user);
         bool UpdateGPAUser(GPAUser user);
-        bool DeleteGPAUser(long userId);
+        bool DeleteGPAUser(string userId);
     }
     public class GPAUsersDb : IGPAUsersDb
     {
@@ -34,7 +34,7 @@ namespace PharmaGo.DAL
             }
         }
 
-        public bool DeleteGPAUser(long userId)
+        public bool DeleteGPAUser(string userId)
         {
             try
             {
@@ -49,7 +49,7 @@ namespace PharmaGo.DAL
             }
         }
 
-        public GPAUser GetGPAUser(long userId)
+        public GPAUser GetGPAUser(string userId)
         {
             return dbContext.GPAUsers.Find(userId);
         }

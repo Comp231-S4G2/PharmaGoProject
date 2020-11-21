@@ -5,6 +5,13 @@
 }
 
 <h2>LogIn</h2>
+@if (ViewBag.ErrorMessage != null)
+{
+    <h3 style="background:red">
+        @ViewBag.ErrorMessage
+    </h3>
+}
+
 
 <hr />
 <div class="row">

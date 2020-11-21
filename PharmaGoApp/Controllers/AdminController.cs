@@ -99,6 +99,6 @@ namespace PharmaGoApp.Controllers
                 return RedirectToAction("ManageStores");
             }
             return View();
-        }
+        }       
     }
 }

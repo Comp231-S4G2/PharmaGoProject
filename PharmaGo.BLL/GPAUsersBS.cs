@@ -9,6 +9,7 @@ namespace PharmaGo.BLL
     public interface IGPAUsersBS
     {
         bool UpdateUser(GPAUser user);
+        bool DeleteUser(GPAUser user);
     }
     public class GPAUsersBS : IGPAUsersBS
     {
@@ -20,6 +21,11 @@ namespace PharmaGo.BLL
         public bool UpdateUser(GPAUser user)
         {
            return usersDb.UpdateGPAUser(user);
+        }
+
+        public bool DeleteUser(GPAUser user)
+        {
+            return usersDb.DeleteGPAUser(user.Id); 
         }
     }
 }
