@@ -22,11 +22,20 @@ namespace PharmaGoApp.Controllers
             return View(customerAppointments);
         }
 
+        /// <summary>
+        /// Create Appointment HttpGet
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Create()
         {
             return View();
         }
+        /// <summary>
+        /// Create 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public IActionResult Create(CustomerApointmentViewModel model)
         {
