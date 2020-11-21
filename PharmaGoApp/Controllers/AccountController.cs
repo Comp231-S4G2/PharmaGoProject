@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PharmaGo.BLL;
 using PharmaGo.BOL;
 using PharmaGoApp.Models;
 
@@ -13,11 +14,12 @@ namespace PharmaGoApp.Controllers
     {
         UserManager<GPAUser> userManager;
         SignInManager<GPAUser> signInManager;
-
-        public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager)
+        IGPAUsersBS gPAUsersBS;
+        public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager, IGPAUsersBS _gPAUsersBS)
         {
             userManager = _userManager;
             signInManager = _signInManager;
+            gPAUsersBS = _gPAUsersBS;
         }
         public IActionResult Index()
         {
@@ -39,6 +41,8 @@ namespace PharmaGoApp.Controllers
                 {
                     UserName = model.UserName,
                     Email = model.Email,
+                    FirstName=model.FirstName,
+                    LastName=model.LastName,
                     // PharmaId=1,
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
@@ -48,7 +52,7 @@ namespace PharmaGoApp.Controllers
                 var resultSign = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                 if (resultSign.Succeeded)
                 {
-                    var a = User.Identity.IsAuthenticated;
+                    //var a = User.Identity.IsAuthenticated;
                     return RedirectToAction("Index", "Home");
                 }
 
@@ -81,6 +85,35 @@ namespace PharmaGoApp.Controllers
                 {
                     return RedirectToAction("Index", "Home");
                 }
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> UpdateAccount()
+        {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var viewModel = new SignUpViewModel()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                UserName = user.UserName,
+                Email = user.Email
+            };
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateAccount(SignUpViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                gPAUsersBS.UpdateUser(user);
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }

@@ -9,6 +9,13 @@ namespace PharmaGoApp.Models
     public class SignUpViewModel
     {
         [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
         public string UserName { get; set; }
         [EmailAddress]
         public string Email { get; set; }
