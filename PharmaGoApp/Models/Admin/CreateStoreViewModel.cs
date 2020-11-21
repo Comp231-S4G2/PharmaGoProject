@@ -25,6 +25,13 @@ namespace PharmaGoApp.Models.Admin
         [Display(Name="Pharmacist Name")]
         public string UserName { get; set; }
 
+        [Required]
+        [Display(Name = "Pharmacist First Name")]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Pharmacist Last Name")]
+        public string LastName { get; set; }
+
         [EmailAddress]
         [Required]
         [Display(Name = "Pharmacist Email")]
@@ -41,6 +48,13 @@ namespace PharmaGoApp.Models.Admin
         [Required]
         [Display(Name = " Assistant Pharmacist Name")]
         public string AsstUserName { get; set; }
+
+        [Required]
+        [Display(Name = "Assistant Pharmacist First Name")]
+        public string AsstFirstName { get; set; }
+
+        [Display(Name = "Assistant Pharmacist Last Name")]
+        public string AsstLastName { get; set; }
 
         [EmailAddress]
         [Display(Name = " Assistant Pharmacist Email")]

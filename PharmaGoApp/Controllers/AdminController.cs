@@ -61,6 +61,8 @@ namespace PharmaGoApp.Controllers
                 GPAUser pharmacist = new GPAUser()
                 {
                     UserName = model.UserName,
+                    FirstName=model.FirstName,
+                    LastName=model.LastName,
                     Email = model.Email,
                     // PharmaId=1,
                     SecurityStamp = Guid.NewGuid().ToString()
@@ -68,6 +70,8 @@ namespace PharmaGoApp.Controllers
                 GPAUser asstPharmacist = new GPAUser()
                 {
                     UserName = model.AsstUserName,
+                    FirstName = model.AsstFirstName,
+                    LastName = model.AsstLastName,
                     Email = model.AsstEmail,
                     // PharmaId=1,
                     SecurityStamp = Guid.NewGuid().ToString()
