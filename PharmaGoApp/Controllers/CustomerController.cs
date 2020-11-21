@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
+using PharmaGo.BOL;
 using PharmaGoApp.Models.Customer;
 
 namespace PharmaGoApp.Controllers
@@ -11,11 +15,17 @@ namespace PharmaGoApp.Controllers
     public class CustomerController : Controller
     {
         private static List<CustomerApointmentViewModel> customerAppointments = new List<CustomerApointmentViewModel>();
-       
+
+        UserManager<GPAUser> userManager;
         private IStoreMedicineBS storeMedicineBS;
-        public CustomerController(IStoreMedicineBS _storeMedicineBS)
+        private readonly IHostingEnvironment webHostEnvironment;
+        private ICustomerPrescriptionBS customerPrescriptionBS;
+        public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, ICustomerPrescriptionBS _customerPrescriptionBS)
         {
+            userManager = _userManager;
             storeMedicineBS = _storeMedicineBS;
+            webHostEnvironment = _webHostEnvironment;
+            customerPrescriptionBS = _customerPrescriptionBS;
         }
         public IActionResult Index()
         {
@@ -73,5 +83,34 @@ namespace PharmaGoApp.Controllers
             return View(medicines);
         }
 
+        [HttpGet]
+        public IActionResult UploadPrescription()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadPrescription(CustomerPrescriptionViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var uploads = Path.Combine(webHostEnvironment.WebRootPath, "uploads");
+                FileUploadHelper objFile = new FileUploadHelper();
+                string strFilePath = await objFile.SaveFileAsync(model.formFile, uploads);
+                strFilePath = strFilePath
+                 .Replace(webHostEnvironment.WebRootPath, string.Empty)
+                 .Replace("\\", "/"); //Relative Path can be stored in database or do logically what is needed.
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var prescription = new CustomerPrescription()
+                {
+                    PrescriptionPath = strFilePath,
+                    UserId = user.Id
+                };
+                customerPrescriptionBS.SavePrescription(prescription);
+                ViewBag.SuccessMsg = "Prescription Uploaded Successfully";
+            }
+
+            return View();
+        }
     }
 }

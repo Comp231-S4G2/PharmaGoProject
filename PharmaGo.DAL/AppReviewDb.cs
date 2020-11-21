@@ -22,6 +22,7 @@ namespace PharmaGo.DAL
             try
             {
                 dbContext.AppReviews.Add(review);
+                dbContext.SaveChanges();
                 return true;
             }
             catch(Exception ex)
