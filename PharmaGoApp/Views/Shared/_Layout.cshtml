@@ -45,10 +45,16 @@
                             <li><a asp-area="" asp-controller="Pharmacy" asp-action="Index">Manage Appointments</a></li>
 
                         }
+                        else if (User.IsInRole("Pharmacist") || User.IsInRole("AsstPharmacist"))
+                        {
+                            <li><a asp-area="" asp-controller="Account" asp-action="TechSupportReview">Tech Support</a></li>
+                        }
+
                         else
                         {
                             <li><a asp-area="" asp-controller="Customer" asp-action="Index">Manage Appointments</a></li>
                             <li><a asp-area="" asp-controller="Customer" asp-action="SearchMedicine">Search Medicine</a></li>
+                            <li><a asp-area="" asp-controller="Account" asp-action="CustomerReview">Tech Support</a></li>
                         }
 
                         <li><a> Hello Mr./Ms. @User.Identity.Name</a>  </li>

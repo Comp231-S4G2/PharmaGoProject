@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
 using PharmaGo.BOL;
 using PharmaGoApp.Models;
+using PharmaGoApp.Models.Customer;
 
 namespace PharmaGoApp.Controllers
 {
@@ -15,11 +16,14 @@ namespace PharmaGoApp.Controllers
         UserManager<GPAUser> userManager;
         SignInManager<GPAUser> signInManager;
         IGPAUsersBS gPAUsersBS;
-        public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager, IGPAUsersBS _gPAUsersBS)
+        IAppReviewBS appReviewBS;
+        public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager,
+                                    IGPAUsersBS _gPAUsersBS, IAppReviewBS _appReviewBS)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             gPAUsersBS = _gPAUsersBS;
+            appReviewBS = _appReviewBS;
         }
         public IActionResult Index()
         {
@@ -130,6 +134,35 @@ namespace PharmaGoApp.Controllers
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             return user;
+        }
+
+        public IActionResult CustomerReview()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CustomerReview(CustomerReviewViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                AppReview app = new AppReview()
+                {
+                    FluShotServices = model.FluShotServices,
+                    ApplicationPerformance = model.ApplicationPerformance,
+                    TechnicalAssistanceResponse = model.TechnicalAssistanceResponse,
+                    OverallReview = model.OverallReview,
+                    UserId = GetLogedInUser().Result.Id
+                };
+                appReviewBS.AddReview(app);
+                ViewBag.SuccessMsg = "Review Submited ";
+            }
+            return View();
+        }
+
+        public IActionResult TechSupportReview()
+        {
+            return View();
         }
     }
 }
