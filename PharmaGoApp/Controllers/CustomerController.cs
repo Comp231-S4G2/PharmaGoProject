@@ -76,10 +76,17 @@ namespace PharmaGoApp.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpPost]
-        public IActionResult SearchMedicine(string Name)
+        [HttpGet]
+        public IActionResult SearchMedicine()
         {
-            var medicines = storeMedicineBS.SearchMedicinesFromStore(Name);
+            var medicines = storeMedicineBS.SearchMedicinesFromStore("");
+            return View(medicines);
+        }
+
+        [HttpPost]
+        public IActionResult SearchMedicine(string MedName)
+        {
+            var medicines = storeMedicineBS.SearchMedicinesFromStore(MedName);
             return View(medicines);
         }
 

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<PharmaGo.BOL.StockMedicine>
+
+@{
+    ViewData["Title"] = "SearchMedicine";
+}
+
+<h2>SearchMedicine</h2>
+
+<form asp-controller="Customer" asp-action="SearchMedicine">
+    <p>
+        Search: <input type="text" name="MedName">
+        <input type="submit" value="Search Medicine" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayName("Medcine Name")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </th>
+            <th>
+                @Html.DisplayName("Pharmacy")
+            </th>
+            <th>
+                @Html.DisplayName("Address")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Medicine.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pharmacy.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pharmacy.Address)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
