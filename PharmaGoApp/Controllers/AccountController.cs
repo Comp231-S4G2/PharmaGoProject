@@ -16,11 +16,14 @@ namespace PharmaGoApp.Controllers
         UserManager<GPAUser> userManager;
         SignInManager<GPAUser> signInManager;
         IGPAUsersBS gPAUsersBS;
-        public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager, IGPAUsersBS _gPAUsersBS)
+        IAppReviewBS appReviewBS;
+        public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager,
+                                    IGPAUsersBS _gPAUsersBS, IAppReviewBS _appReviewBS)
         {
             userManager = _userManager;
             signInManager = _signInManager;
             gPAUsersBS = _gPAUsersBS;
+            appReviewBS = _appReviewBS;
         }
         public IActionResult Index()
         {
@@ -139,8 +142,21 @@ namespace PharmaGoApp.Controllers
         }
 
         [HttpPost]
-        public IActionResult CustomerReview(CustomerReviewViewModel model)
+        public async Task<IActionResult> CustomerReview(CustomerReviewViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                AppReview app = new AppReview()
+                {
+                    FluShotServices = model.FluShotServices,
+                    ApplicationPerformance = model.ApplicationPerformance,
+                    TechnicalAssistanceResponse = model.TechnicalAssistanceResponse,
+                    OverallReview = model.OverallReview,
+                    UserId = GetLogedInUser().Result.Id
+                };
+                appReviewBS.AddReview(app);
+                ViewBag.SuccessMsg = "Review Submited ";
+            }
             return View();
         }
 
