@@ -110,7 +110,9 @@ namespace PharmaGoApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UpdateAccount(SignUpViewModel model)
         {
-            if (ModelState.IsValid)
+            
+            if ((model.FirstName!=null&& model.FirstName.Trim() !="")|| (model.LastName != null && model.LastName.Trim() != "")
+                || (model.UserName != null && model.UserName.Trim() != "")|| (model.Email != null && model.Email.Trim() != ""))
             {
                 var user = await userManager.FindByNameAsync(User.Identity.Name);
                 user.FirstName = model.FirstName;
