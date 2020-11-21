@@ -20,6 +20,8 @@ namespace PharmaGo.BLL
         }
         public IEnumerable<StockMedicine> SearchMedicinesFromStore(string medName)
         {
+            if (medName == null || medName.Trim() == "")
+                return medicinesStoreDb.GetStockMedicines();
             return medicinesStoreDb.GetStockMedicines().Where(x => x.Medicine.Name.Contains(medName));
         }
     }

@@ -1,4 +1,5 @@
-﻿using PharmaGo.BOL;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -64,7 +65,7 @@ namespace PharmaGo.DAL
 
         public IEnumerable<StockMedicine> GetStockMedicines()
         {
-            return dbContext.StockMedicines;
+            return dbContext.StockMedicines.Include(x=>x.Medicine).Include(x=>x.Pharmacy);
         }
 
         public bool UpdateStockMedicine(StockMedicine stockMedicine)
