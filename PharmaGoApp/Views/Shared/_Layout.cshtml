@@ -51,6 +51,10 @@
                             {
                                 <li><a asp-area="" asp-controller="AsstPharmacist" asp-action="Index">Med Stock</a></li>
                             }
+                            else
+                            {
+                                <li><a asp-area="" asp-controller="Pharmacy" asp-action="GetPrescriptions">View Prescriptions </a></li>
+                            }
                             <li><a asp-area="" asp-controller="Account" asp-action="TechSupportReview">Tech Support</a></li>
                         }
 

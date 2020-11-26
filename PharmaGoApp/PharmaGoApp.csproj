@@ -30,4 +30,8 @@
     <ProjectReference Include="..\PharmaGo.DAL\PharmaGo.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\uploads\" />
+  </ItemGroup>
+
 </Project>
