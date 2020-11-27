@@ -7,6 +7,13 @@
 <h2>Allot Medicine On Prescription</h2>
 
 <h4>ReserveMedicine</h4>
+
+@if(ViewBag.ErrMessage != null)
+{
+    <h2 style="background:red">
+        @ViewBag.ErrMessage
+    </h2>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">

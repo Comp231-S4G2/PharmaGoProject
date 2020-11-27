@@ -43,11 +43,11 @@ namespace PharmaGo.BLL
         {
             try
             {
-                MedDemandDb.AddMedDemand(medDemand);
+                var result=MedDemandDb.AddMedDemand(medDemand);
                 if (prescription.MedDemands == null)
                     prescription.MedDemands = new List<MedDemand>();
                 prescription.MedDemands.Add(medDemand);
-                return true;
+                return result;
             }
             catch(Exception ex)
             {

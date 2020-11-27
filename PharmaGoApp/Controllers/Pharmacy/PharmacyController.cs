@@ -126,8 +126,10 @@ namespace PharmaGoApp.Controllers.Pharmacy
                     Quantity=model.Quantity,
                     InStock=1
                 };
-                customerPrescriptionBS.SavePrescriptionMedicine(prescription,prescriptionMedicine);
-                return RedirectToAction("ApprovePrescription",new { id = model.PrescriptionId });
+                var result=customerPrescriptionBS.SavePrescriptionMedicine(prescription,prescriptionMedicine);
+                if(result)
+                    return RedirectToAction("ApprovePrescription",new { id = model.PrescriptionId });
+                ViewBag.ErrMessage = "Stock is not sufficient";
             }
             ViewBag.StockMedicines = storeMedicineBS.GetStockMedicines();
             return View();

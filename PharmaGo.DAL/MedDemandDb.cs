@@ -27,9 +27,16 @@ namespace PharmaGo.DAL
         {
             try
             {
-                dbContext.MedDemands.Add(medDemand);
-                dbContext.SaveChanges();
-                return true;
+                var stockMedicine = dbContext.StockMedicines.Find(medDemand.StockMedicineId);
+                if (stockMedicine.Quantity > medDemand.Quantity)
+                {
+                    stockMedicine.Quantity = stockMedicine.Quantity - medDemand.Quantity;
+                    dbContext.Update<StockMedicine>(stockMedicine);
+                    dbContext.MedDemands.Add(medDemand);
+                    dbContext.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             catch(Exception ex)
             {
