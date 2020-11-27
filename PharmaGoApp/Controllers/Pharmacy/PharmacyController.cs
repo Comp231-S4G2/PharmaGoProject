@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
+using PharmaGo.BOL;
 using PharmaGoApp.Models.Common;
 using PharmaGoApp.Models.Pharmacy;
 
@@ -108,12 +109,26 @@ namespace PharmaGoApp.Controllers.Pharmacy
                 PatientName = x.user.UserName,
                 PatientId = x.UserId
             }).FirstOrDefault(x=>x.PrescriptionId==prescriptionId);
+            ViewBag.StockMedicines = storeMedicineBS.GetStockMedicines();
             return View(result);
         }
 
         [HttpPost]
         public IActionResult CreateReserveMed(ReserveMedicine model)
         {
+            if (ModelState.IsValid)
+            {
+                var prescription = customerPrescriptionBS.GetCustomerPrescriptions().FirstOrDefault(x => x.Id == model.PrescriptionId);
+                var prescriptionMedicine = new MedDemand()
+                {
+                    CustomerPrescriptionId=model.PrescriptionId,
+                    StockMedicineId=model.StockMedicineId,
+                    Quantity=model.Quantity,
+                    InStock=1
+                };
+                customerPrescriptionBS.SavePrescriptionMedicine(prescription,prescriptionMedicine);
+                return RedirectToAction("ApprovePrescription",new { id = model.PrescriptionId });
+            }
             ViewBag.StockMedicines = storeMedicineBS.GetStockMedicines();
             return View();
         }

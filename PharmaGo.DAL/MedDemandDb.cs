@@ -1,4 +1,5 @@
-﻿using PharmaGo.BOL;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +64,7 @@ namespace PharmaGo.DAL
 
         public IEnumerable<MedDemand> GetMedDemandsByPrescription(long prescriptionId)
         {
-            return dbContext.MedDemands.Where(x => x.CustomerPrescriptionId == prescriptionId);
+            return dbContext.MedDemands.Where(x => x.CustomerPrescriptionId == prescriptionId).Include(x=>x.CustomerPrescription.user).Include(x=>x.StockMedicine.Medicine);
         }
     }
 }
