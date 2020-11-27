@@ -13,5 +13,6 @@ namespace PharmaGoApp.Models.Common
         public string PatientName { get; set; }
         public string PatientId { get; set; }
         public int Quantity { get; set; }
+        public long PrescriptionId { get; set; }
     }
 }

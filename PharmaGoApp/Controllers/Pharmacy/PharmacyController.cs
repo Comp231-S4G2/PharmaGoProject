@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
+using PharmaGoApp.Models.Common;
 using PharmaGoApp.Models.Pharmacy;
 
 namespace PharmaGoApp.Controllers.Pharmacy
@@ -12,16 +13,19 @@ namespace PharmaGoApp.Controllers.Pharmacy
     {
         ICustomerPrescriptionBS customerPrescriptionBS;
         IGPAUsersBS gPAUsersBS;
+        IStoreMedicineBS storeMedicineBS;
         public static List<AppointmentViewModel> appointments = new List<AppointmentViewModel>()
         {
             new AppointmentViewModel(){Id=1,CustomerName="Neeraj",TimeSlot="9.00 AM",Age="20"},
             new AppointmentViewModel(){Id=2,CustomerName="Fred",TimeSlot="9.30 AM",Age="25"},
             new AppointmentViewModel(){Id=3,CustomerName="Neeraj",TimeSlot="10.00 AM",Age="24"},
         };
-        public PharmacyController(ICustomerPrescriptionBS _customerPrescriptionBS, IGPAUsersBS _gPAUsersBS)
+        public PharmacyController(ICustomerPrescriptionBS _customerPrescriptionBS, IGPAUsersBS _gPAUsersBS
+                                    , IStoreMedicineBS _storeMedicineBS)
         {
             customerPrescriptionBS = _customerPrescriptionBS;
             gPAUsersBS = _gPAUsersBS;
+            storeMedicineBS = _storeMedicineBS;
         }
         public IActionResult Index()
         {
@@ -69,6 +73,49 @@ namespace PharmaGoApp.Controllers.Pharmacy
             
             });
             return View(result);
+        }
+
+        //ApprovePrescription
+        [HttpGet]
+        public IActionResult ApprovePrescription(long id)
+        {
+            var medicinesReserve = customerPrescriptionBS.GetCustomerPrescriptionMedDemands(id).Select(x=>
+            new ReserveMedicine()
+            {
+                PrescriptionId=id,
+                StockMedicineId=x.StockMedicineId,
+                MedName=x.StockMedicine.Medicine.Name,
+                UnitPrice=x.StockMedicine.Medicine.Price,
+                PatientName=x.CustomerPrescription.user.UserName,
+                PatientId=x.CustomerPrescription.UserId,
+                Quantity=x.Quantity
+            });
+            TempData["PrescriptionId"] = id;
+            return View(medicinesReserve);
+        }
+
+        [HttpGet]
+        public IActionResult CreateReserveMed()
+        {
+            long prescriptionId = 0;
+            long.TryParse(TempData["PrescriptionId"].ToString(),out prescriptionId);
+            var result = customerPrescriptionBS.GetCustomerPrescriptions()
+                .Where(y => y.Id == prescriptionId)
+                .Select(x =>
+            new ReserveMedicine()
+            {
+                PrescriptionId = prescriptionId,
+                PatientName = x.user.UserName,
+                PatientId = x.UserId
+            }).FirstOrDefault(x=>x.PrescriptionId==prescriptionId);
+            return View(result);
+        }
+
+        [HttpPost]
+        public IActionResult CreateReserveMed(ReserveMedicine model)
+        {
+            ViewBag.StockMedicines = storeMedicineBS.GetStockMedicines();
+            return View();
         }
     }
 }
