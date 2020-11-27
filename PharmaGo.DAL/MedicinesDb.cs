@@ -40,7 +40,7 @@ namespace PharmaGo.DAL
             try
             {
                 var medicine = dbContext.Medicines.Find(medicineId);
-                dbContext.Remove(medicine);
+                dbContext.Medicines.Remove(medicine);
                 dbContext.SaveChanges();
                 return true;
             }
