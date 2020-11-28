@@ -1,0 +1,52 @@
+﻿@model IEnumerable<PharmaGoApp.Models.Pharmacy.AddSlotViewModel>
+
+@{
+    ViewData["Title"] = "GetSchedules";
+}
+
+<h2>Schedules</h2>
+
+<p>
+    <a asp-action="CreateSchedule">Create New Schedule</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleStartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ScheduleEndTime)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduleStartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScheduleEndTime)
+            </td>
+            <td>
+                @Html.ActionLink("Edit Schedule", "EditSchedule", new { id=item.Id }) |
+                @Html.ActionLink("Delete Schedule", "DeleteSchedule", new { id = item.Id })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

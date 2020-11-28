@@ -28,6 +28,35 @@ namespace PharmaGoApp.Controllers.Pharmacy
             gPAUsersBS = _gPAUsersBS;
             storeMedicineBS = _storeMedicineBS;
         }
+
+        public IActionResult GetSchedules()
+        {
+            var result = new List<AddSlotViewModel>();
+            return View(result);
+        }
+
+        [HttpGet]
+        public IActionResult CreateSchedule()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateSchedule(AddSlotViewModel model)
+        {
+            return View();
+        }
+
+        public IActionResult EditSchedule(long id)
+        {
+            return View();
+        }
+
+        public IActionResult DeleteSchedule(long id)
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View(appointments);

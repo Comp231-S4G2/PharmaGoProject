@@ -8,13 +8,19 @@ namespace PharmaGoApp.Models.Pharmacy
 {
     public class AddSlotViewModel
     {
+        public long Id { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
         [Required]
         [DataType(DataType.Time)]
-        [Display(Name ="Time")]
-        public DateTime ScheduleTime { get; set; }
+        [Display(Name ="Start Time")]
+        public DateTime ScheduleStartTime { get; set; }
+
+        [Required]
+        [DataType(DataType.Time)]
+        [Display(Name = "End Time")]
+        public DateTime ScheduleEndTime { get; set; }
     }
 }
