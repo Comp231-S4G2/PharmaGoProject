@@ -1,0 +1,111 @@
+﻿@model PharmaGoApp.Models.Customer.CustomerApointmentViewModel
+
+@{
+    ViewData["Title"] = "CreateAppointment";
+}
+
+<h2>schedule New Appointment</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateAppointment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PatientName" class="control-label"></label>
+                <input asp-for="PatientName" class="form-control" />
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Age" class="control-label"></label>
+                <input asp-for="Age" class="form-control" />
+                <span asp-validation-for="Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScheduleTime" class="control-label"></label>
+                <input asp-for="ScheduleTime" class="form-control" />
+                <span asp-validation-for="ScheduleTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoreId" class="control-label"></label>
+                <input asp-for="StoreId" class="form-control" />
+                <span asp-validation-for="StoreId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StoreName" class="control-label"></label>
+                <input asp-for="StoreName" class="form-control" />
+                <span asp-validation-for="StoreName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Schedule Appointment" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+<h2 id="storeIdErr" style="background:red" class="hidden">
+    Choose Store In StoreId
+</h2>
+<h2 id="storeNameErr" style="background:red" class="hidden">
+    Choose Store In Store Name
+</h2>
+<h2 id="dateErr" style="background:red" class="hidden">
+    Choose Date 
+</h2>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+<script>
+    
+    var validateTimeSlot = () => {
+        if (!$("#StoreId").val() > 0)
+            showMsgs("storeIdErr");
+        else
+            hideMsgs("storeIdErr");
+
+        if ($("#StoreName").val().trim() =="")
+            showMsgs("storeNameErr")
+        else
+            hideMsgs("storeNameErr");
+
+        if (!$("#Date").val() > 0)
+            showMsgs("dateErr")
+        else
+            hideMsgs("dateErr");
+
+        if ($("#StoreId").val() > 0 && $("#Date").val() > 0) {
+            //get values and make ajax call to get Slot on that particular date
+            $.ajax({
+                type: "POST",
+                url: '/GetSchedulesByStoreAndDate', // <-- Where should this point?
+                contentType: "application/json; charset=utf-8",
+                data: {
+                    storeId: $("#StoreId").val(),
+                    date: $("#Date").val()
+                },
+                dataType: "json",
+                error: function (xhr, status, errorThrown) {
+                    var err = "Status: " + status + " " + errorThrown;
+                    console.log(err);
+                }
+            }).done(function (data) {
+                console.log(data.result);
+            })
+        }
+    }
+
+    var hideMsgs = (id) => {
+        $("#" + id).addClass("hidden");
+    };
+    var showMsgs = (id) => {
+        $("#" + id).removeClass("hidden");
+    }
+
+    $("#Date").on("change", function () { validateTimeSlot(); });
+    $("#StoreId").on("change", function () { validateTimeSlot(); });
+    $("#StoreName").on("change", function () { validateTimeSlot(); });
+</script>

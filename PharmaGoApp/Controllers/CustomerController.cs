@@ -20,17 +20,36 @@ namespace PharmaGoApp.Controllers
         private IStoreMedicineBS storeMedicineBS;
         private readonly IHostingEnvironment webHostEnvironment;
         private ICustomerPrescriptionBS customerPrescriptionBS;
-        public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, ICustomerPrescriptionBS _customerPrescriptionBS)
+        private IAppointmentBS appointmentBS;
+        public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, 
+            ICustomerPrescriptionBS _customerPrescriptionBS, IAppointmentBS _appointmentBS)
         {
             userManager = _userManager;
             storeMedicineBS = _storeMedicineBS;
             webHostEnvironment = _webHostEnvironment;
             customerPrescriptionBS = _customerPrescriptionBS;
+            appointmentBS = _appointmentBS;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var prescriptions = 6;
-            return View(customerAppointments);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var prescriptions = appointmentBS.GetAppointmentsByPatient(user.Id).Select(x=>
+            new CustomerApointmentViewModel() 
+            { 
+                Id=x.Id,
+                PatientName=user.UserName,
+                Date=x.TimeSlot.Date,
+                ScheduleTime=x.ApptTime,
+                StoreId=x.StoreId,
+                StoreName=x.TimeSlot.Pharmacy.Name
+            });
+            return View(prescriptions);
+        }
+
+        [HttpPost]
+        public IActionResult GetSchedulesByStoreAndDate(long storeId,DateTime date)
+        {
+            return View();
         }
 
         /// <summary>
@@ -38,7 +57,7 @@ namespace PharmaGoApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateAppointment()
         {
             return View();
         }
@@ -48,7 +67,7 @@ namespace PharmaGoApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(CustomerApointmentViewModel model)
+        public IActionResult CreateAppointment(CustomerApointmentViewModel model)
         {
             model.Id = customerAppointments.Count() + 1;
             customerAppointments.Add(model);
