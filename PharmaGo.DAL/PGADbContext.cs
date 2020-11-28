@@ -31,5 +31,7 @@ namespace PharmaGo.DAL
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<AppReview> AppReviews { get; set; }
         public DbSet<CustomerPrescription> CustomerPrescriptions { get; set; }
+        public DbSet<MedDemand> MedDemands { get; set; }
+        public DbSet<TimeSlot> TimeSlots { get; set; }
     }
 }

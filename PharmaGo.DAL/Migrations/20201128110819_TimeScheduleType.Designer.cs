@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmaGo.DAL;
 
 namespace PharmaGo.DAL.Migrations
 {
     [DbContext(typeof(PGADbContext))]
-    partial class PGADbContextModelSnapshot : ModelSnapshot
+    [Migration("20201128110819_TimeScheduleType")]
+    partial class TimeScheduleType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,7 +199,7 @@ namespace PharmaGo.DAL.Migrations
 
                     b.Property<long>("StoreId");
 
-                    b.Property<long>("TimeSlotId");
+                    b.Property<long?>("TimeSlotId");
 
                     b.HasKey("Id");
 
@@ -425,10 +427,9 @@ namespace PharmaGo.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("PharmaGo.BOL.TimeSlot", "TimeSlot")
+                    b.HasOne("PharmaGo.BOL.TimeSlot")
                         .WithMany("Appointments")
-                        .HasForeignKey("TimeSlotId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TimeSlotId");
                 });
 
             modelBuilder.Entity("PharmaGo.BOL.CustomerPrescription", b =>

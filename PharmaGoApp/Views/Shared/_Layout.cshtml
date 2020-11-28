@@ -51,6 +51,11 @@
                             {
                                 <li><a asp-area="" asp-controller="AsstPharmacist" asp-action="Index">Med Stock</a></li>
                             }
+                            else
+                            {
+                                <li><a asp-area="" asp-controller="Pharmacy" asp-action="GetSchedules">Scheduler </a></li>
+                                <li><a asp-area="" asp-controller="Pharmacy" asp-action="GetPrescriptions">View Prescriptions </a></li>
+                            }
                             <li><a asp-area="" asp-controller="Account" asp-action="TechSupportReview">Tech Support</a></li>
                         }
 
@@ -61,7 +66,7 @@
                             <li><a asp-area="" asp-controller="Customer" asp-action="SearchMedicine">Search Medicine</a></li>
                             <li><a asp-area="" asp-controller="Account" asp-action="CustomerReview">Tech Support</a></li>
                         }
-
+                        
                         <li><a> Hello Mr./Ms. @User.Identity.Name</a>  </li>
                         <li><a asp-area="" asp-controller="Account" asp-action="UpdateAccount">Update Account</a></li>
                         <li><a asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a></li>

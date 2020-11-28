@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmaGo.DAL;
 
 namespace PharmaGo.DAL.Migrations
 {
     [DbContext(typeof(PGADbContext))]
-    partial class PGADbContextModelSnapshot : ModelSnapshot
+    [Migration("20201127132125_PrescriptionDrugBOL")]
+    partial class PrescriptionDrugBOL
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,13 +199,11 @@ namespace PharmaGo.DAL.Migrations
 
                     b.Property<long>("StoreId");
 
-                    b.Property<long>("TimeSlotId");
-
                     b.HasKey("Id");
 
                     b.HasIndex("CustomerId");
 
-                    b.HasIndex("TimeSlotId");
+                    b.HasIndex("StoreId");
 
                     b.ToTable("Appointments");
                 });
@@ -338,27 +338,6 @@ namespace PharmaGo.DAL.Migrations
                     b.ToTable("StockMedicines");
                 });
 
-            modelBuilder.Entity("PharmaGo.BOL.TimeSlot", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("Date");
-
-                    b.Property<long>("PharmacyId");
-
-                    b.Property<DateTime>("ScheduleEndTime");
-
-                    b.Property<DateTime>("ScheduleStartTime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PharmacyId");
-
-                    b.ToTable("TimeSlots");
-                });
-
             modelBuilder.Entity("PharmaGo.BOL.GPAUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -425,9 +404,9 @@ namespace PharmaGo.DAL.Migrations
                         .WithMany()
                         .HasForeignKey("CustomerId");
 
-                    b.HasOne("PharmaGo.BOL.TimeSlot", "TimeSlot")
-                        .WithMany("Appointments")
-                        .HasForeignKey("TimeSlotId")
+                    b.HasOne("PharmaGo.BOL.Pharmacy", "Store")
+                        .WithMany()
+                        .HasForeignKey("StoreId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -472,14 +451,6 @@ namespace PharmaGo.DAL.Migrations
                     b.HasOne("PharmaGo.BOL.Pharmacy", "Pharmacy")
                         .WithMany("MedStores")
                         .HasForeignKey("PharmacyId");
-                });
-
-            modelBuilder.Entity("PharmaGo.BOL.TimeSlot", b =>
-                {
-                    b.HasOne("PharmaGo.BOL.Pharmacy", "Pharmacy")
-                        .WithMany()
-                        .HasForeignKey("PharmacyId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

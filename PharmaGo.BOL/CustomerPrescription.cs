@@ -12,6 +12,7 @@ namespace PharmaGo.BOL
         public string UserId { get; set; }
         public GPAUser user { get; set; }
         public string PrescriptionPath { get; set; }
+        public List<MedDemand> MedDemands { get; set; }
 
     }
 }

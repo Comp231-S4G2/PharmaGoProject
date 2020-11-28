@@ -1,4 +1,5 @@
-﻿using PharmaGo.BOL;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,7 +20,7 @@ namespace PharmaGo.DAL
         }
         public IEnumerable<CustomerPrescription> GetCustomerPrescriptions()
         {
-            return dbContext.CustomerPrescriptions;
+            return dbContext.CustomerPrescriptions.Include(x=>x.user);
         }
 
         public bool SavePrescription(CustomerPrescription prescription)
