@@ -1,6 +1,7 @@
 ﻿using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PharmaGo.DAL
@@ -17,39 +18,73 @@ namespace PharmaGo.DAL
     }
     public class TimeSlotsDb : ITimeSlotsDb
     {
+        PGADbContext dbContext;
+        public TimeSlotsDb(PGADbContext _dbContext)
+        {
+            dbContext = _dbContext;
+        }
         public bool AddTimeSlot(TimeSlot timeSlot)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dbContext.TimeSlots.Add(timeSlot);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
 
         public bool DeleteTimeSlot(long id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var timeSlot = dbContext.TimeSlots.Find(id);
+                dbContext.TimeSlots.Remove(timeSlot);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
         public TimeSlot GetTimeSlot(long id)
         {
-            throw new NotImplementedException();
+            var timeSlot = dbContext.TimeSlots.Find(id);
+            return timeSlot;
         }
 
         public IEnumerable<TimeSlot> GetTimeSlots()
         {
-            throw new NotImplementedException();
+            return dbContext.TimeSlots;
         }
 
         public IEnumerable<TimeSlot> GetTimeSlotsByStore(long storeId)
         {
-            throw new NotImplementedException();
+            return dbContext.TimeSlots.Where(x=>x.PharmacyId==storeId);
         }
 
         public IEnumerable<TimeSlot> GetTimeSlotsByStoreAndDate(long storeId, DateTime date)
         {
-            throw new NotImplementedException();
+            return dbContext.TimeSlots.Where(x => x.PharmacyId == storeId&&x.Date.Equals(date));
         }
 
         public bool UpdateTimeSlot(TimeSlot timeSlot)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dbContext.Update<TimeSlot>(timeSlot);
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
