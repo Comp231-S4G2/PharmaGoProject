@@ -46,7 +46,7 @@ namespace PharmaGoApp.Controllers
             return View(prescriptions);
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult GetSchedulesByStoreAndDate(long storeId,DateTime date)
         {
             return View();

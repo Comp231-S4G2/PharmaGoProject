@@ -77,11 +77,11 @@
         else
             hideMsgs("dateErr");
 
-        if ($("#StoreId").val() > 0 && $("#Date").val() > 0) {
+        if ($("#StoreId").val() > 0 && $("#Date").val() !="") {
             //get values and make ajax call to get Slot on that particular date
             $.ajax({
-                type: "POST",
-                url: '/GetSchedulesByStoreAndDate', // <-- Where should this point?
+                type: "GET",
+                url: '/Customer/GetSchedulesByStoreAndDate', // <-- Where should this point?
                 contentType: "application/json; charset=utf-8",
                 data: {
                     storeId: $("#StoreId").val(),
@@ -95,6 +95,7 @@
             }).done(function (data) {
                 console.log(data.result);
             })
+            console.log("AJAX");
         }
     }
 
