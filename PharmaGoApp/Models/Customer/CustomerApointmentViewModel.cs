@@ -10,7 +10,7 @@ namespace PharmaGoApp.Models.Customer
     {
         public long Id { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name ="Patient Name")]
         public string PatientName { get; set; }
         public string Age { get; set; }

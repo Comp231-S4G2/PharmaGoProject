@@ -91,10 +91,26 @@ namespace PharmaGoApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult CreateAppointment(CustomerApointmentViewModel model)
+        public async Task<IActionResult> CreateAppointment(CustomerApointmentViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(model.StoreId, model.Date);
+                var firstSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var appointment = new Appointment()
+                {
+                    StoreId=model.StoreId,
+                    CustomerId=user.Id,
+                    ApptTime=model.ScheduleTime,
+                    TimeSlotId=firstSlot.Id
+                };
+                if(appointmentBS.CreateAppointment(appointment))
+                    return RedirectToAction("Index");
+                ViewBag.ErrMassage = "Time is already Booked";
+            }
             ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
-            return RedirectToAction("Index");
+            return View();
         }
         public IActionResult Delete(int id)
         {

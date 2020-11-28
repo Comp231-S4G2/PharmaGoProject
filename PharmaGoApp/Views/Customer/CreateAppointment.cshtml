@@ -5,6 +5,13 @@
 }
 
 <h2>schedule New Appointment</h2>
+
+@if(ViewBag.ErrMassage!=null)
+{
+<h2 style="background:red">
+    @ViewBag.ErrMassage
+</h2>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">

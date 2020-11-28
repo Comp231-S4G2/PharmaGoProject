@@ -1,4 +1,5 @@
-﻿using PharmaGo.BOL;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,7 +60,7 @@ namespace PharmaGo.DAL
 
         public IEnumerable<Appointment> GetAppointments()
         {
-            return dbContext.Appointments;
+            return dbContext.Appointments.Include(x=>x.TimeSlot.Pharmacy);
         }
 
         public IEnumerable<Appointment> GetAppointmentsByStore(long storeId)
