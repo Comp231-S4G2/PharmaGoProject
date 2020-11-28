@@ -50,6 +50,7 @@ namespace PharmaGoApp
             services.AddTransient<ICustomerPrescriptionDb, CustomerPrescriptionDb>();
             services.AddTransient<IMedDemandDb, MedDemandDb>();
             services.AddTransient<ITimeSlotsDb, TimeSlotsDb>();
+            services.AddTransient<IAppointmentsDb, AppointmentsDb>();
             #endregion
 
             #region BLLDI
@@ -61,6 +62,7 @@ namespace PharmaGoApp
             services.AddTransient<IAppReviewBS, AppReviewBS>();
             services.AddTransient<ICustomerPrescriptionBS, CustomerPrescriptionBS>();
             services.AddTransient<ITimeSlotsBS, TimeSlotsBS>();
+            services.AddTransient<IAppointmentBS, AppointmentsBS>();
             #endregion
 
             services.AddDbContext<PGADbContext>(options =>

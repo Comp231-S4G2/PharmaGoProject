@@ -29,6 +29,7 @@ namespace PharmaGoApp.Controllers
         }
         public IActionResult Index()
         {
+            var prescriptions = 6;
             return View(customerAppointments);
         }
 
