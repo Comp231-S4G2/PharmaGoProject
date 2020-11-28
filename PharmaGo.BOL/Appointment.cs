@@ -12,7 +12,9 @@ namespace PharmaGo.BOL
         public string CustomerId { get; set; }
         public long StoreId { get; set; }
 
+        //public long TimeSlotId { get; set; }
+
+        //public TimeSlot TimeSlot { get; set; }
         public GPAUser Customer { get; set; }
-        public Pharmacy Store { get; set; }
     }
 }
