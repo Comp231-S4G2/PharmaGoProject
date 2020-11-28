@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
 using PharmaGo.BOL;
@@ -15,23 +16,43 @@ namespace PharmaGoApp.Controllers.Pharmacy
         ICustomerPrescriptionBS customerPrescriptionBS;
         IGPAUsersBS gPAUsersBS;
         IStoreMedicineBS storeMedicineBS;
+        ITimeSlotsBS TimeSlotsBS;
+        UserManager<GPAUser> userManager;
         public static List<AppointmentViewModel> appointments = new List<AppointmentViewModel>()
         {
             new AppointmentViewModel(){Id=1,CustomerName="Neeraj",TimeSlot="9.00 AM",Age="20"},
             new AppointmentViewModel(){Id=2,CustomerName="Fred",TimeSlot="9.30 AM",Age="25"},
             new AppointmentViewModel(){Id=3,CustomerName="Neeraj",TimeSlot="10.00 AM",Age="24"},
         };
+
+        
+
         public PharmacyController(ICustomerPrescriptionBS _customerPrescriptionBS, IGPAUsersBS _gPAUsersBS
-                                    , IStoreMedicineBS _storeMedicineBS)
+                                    , IStoreMedicineBS _storeMedicineBS, ITimeSlotsBS _TimeSlotsBS, UserManager<GPAUser> _userManager)
         {
             customerPrescriptionBS = _customerPrescriptionBS;
             gPAUsersBS = _gPAUsersBS;
             storeMedicineBS = _storeMedicineBS;
+            TimeSlotsBS = _TimeSlotsBS;
+            userManager = _userManager;
+        }
+
+        private async Task<GPAUser> GetLogedInUser()
+        {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            return user;
         }
 
         public IActionResult GetSchedules()
         {
-            var result = new List<AddSlotViewModel>();
+            var result = TimeSlotsBS.GetTimeSlots().Select(x =>
+            new AddSlotViewModel()
+            {
+                Id=x.Id,
+                Date=x.Date,
+                ScheduleStartTime=x.ScheduleStartTime,
+                ScheduleEndTime=x.ScheduleEndTime
+            });
             return View(result);
         }
 
@@ -44,17 +65,64 @@ namespace PharmaGoApp.Controllers.Pharmacy
         [HttpPost]
         public IActionResult CreateSchedule(AddSlotViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                long pharmaId = 0;
+                long.TryParse(GetLogedInUser().Result.PharmaId.ToString(), out pharmaId);
+                var timeSlot = new TimeSlot()
+                {
+                    Date = model.Date,
+                    ScheduleEndTime = model.ScheduleEndTime,
+                    ScheduleStartTime = model.ScheduleStartTime,
+                    PharmacyId = pharmaId
+                };
+                
+                if (TimeSlotsBS.AddTimeSlot(timeSlot))
+                {
+                    return RedirectToAction("GetSchedules");
+                }
+                ViewBag.ErrMassage = "Schedule can not be created";
+            }
             return View();
         }
 
+        [HttpGet]
         public IActionResult EditSchedule(long id)
         {
-            return View();
+            var timeSlot = TimeSlotsBS.GetTimeSlot(id);
+
+            var result = new AddSlotViewModel()
+            {
+                Id = id,
+                Date = timeSlot.Date,
+                ScheduleStartTime = timeSlot.ScheduleStartTime,
+                ScheduleEndTime = timeSlot.ScheduleEndTime
+            };
+            return View(result);
         }
 
+        [HttpPost]
+        public IActionResult EditSchedule(AddSlotViewModel model)
+        {
+            long pharmaId = 0;
+            long.TryParse(GetLogedInUser().Result.PharmaId.ToString(), out pharmaId);
+            var result = new TimeSlot()
+            {
+                Id = model.Id,
+                Date = model.Date,
+                ScheduleEndTime = model.ScheduleEndTime,
+                ScheduleStartTime = model.ScheduleStartTime,
+                PharmacyId = pharmaId
+            };
+            if(TimeSlotsBS.UpdateTimeSlot(result))
+                return RedirectToAction("GetSchedules");
+            ViewBag.ErrMassage = "Schedule can not be Updated";
+            return View();
+        }
         public IActionResult DeleteSchedule(long id)
         {
-            return View();
+            TimeSlotsBS.DeleteTimeSlot(id);
+            return RedirectToAction("GetSchedules");
         }
 
         public IActionResult Index()
