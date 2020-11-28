@@ -114,9 +114,9 @@ namespace PharmaGoApp.Controllers
         }
         public IActionResult DeleteAppointment(int id)
         {
-            var appointment = customerAppointments.Find(x => x.Id == id);
-            customerAppointments.Remove(appointment);
-            return RedirectToAction("Index");
+            if(appointmentBS.DeleteAppointment(id))
+                return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]
