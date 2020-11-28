@@ -112,7 +112,7 @@ namespace PharmaGoApp.Controllers
             ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
             return View();
         }
-        public IActionResult Delete(int id)
+        public IActionResult DeleteAppointment(int id)
         {
             var appointment = customerAppointments.Find(x => x.Id == id);
             customerAppointments.Remove(appointment);
