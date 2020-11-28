@@ -1,4 +1,5 @@
-﻿using PharmaGo.BOL;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -70,7 +71,8 @@ namespace PharmaGo.DAL
 
         public IEnumerable<TimeSlot> GetTimeSlotsByStoreAndDate(long storeId, DateTime date)
         {
-            return dbContext.TimeSlots.Where(x => x.PharmacyId == storeId&&x.Date.Equals(date));
+            return dbContext.TimeSlots.Where(x => x.PharmacyId == storeId&&x.Date.Equals(date))
+                .Include(x=>x.Appointments);
         }
 
         public bool UpdateTimeSlot(TimeSlot timeSlot)

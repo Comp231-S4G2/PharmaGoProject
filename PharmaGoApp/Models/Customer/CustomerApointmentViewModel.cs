@@ -24,6 +24,10 @@ namespace PharmaGoApp.Models.Customer
         [Display(Name = "Time")]
         public DateTime ScheduleTime { get; set; }
 
+        [DataType(DataType.Time)]
+        [Display(Name = "End Time")]
+        public DateTime ScheduleEndTime { get; set; }
+
         public long StoreId { get; set; }
         public string StoreName { get; set; }
 

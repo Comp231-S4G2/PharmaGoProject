@@ -21,14 +21,18 @@ namespace PharmaGoApp.Controllers
         private readonly IHostingEnvironment webHostEnvironment;
         private ICustomerPrescriptionBS customerPrescriptionBS;
         private IAppointmentBS appointmentBS;
+        private ITimeSlotsBS timeSlotsBS;
+        private IPharmaciesBS pharmaciesBS;
         public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, 
-            ICustomerPrescriptionBS _customerPrescriptionBS, IAppointmentBS _appointmentBS)
+            ICustomerPrescriptionBS _customerPrescriptionBS, IAppointmentBS _appointmentBS, ITimeSlotsBS _timeSlotsBS, IPharmaciesBS _pharmaciesBS)
         {
             userManager = _userManager;
             storeMedicineBS = _storeMedicineBS;
             webHostEnvironment = _webHostEnvironment;
             customerPrescriptionBS = _customerPrescriptionBS;
             appointmentBS = _appointmentBS;
+            timeSlotsBS = _timeSlotsBS;
+            pharmaciesBS = _pharmaciesBS;
         }
         public async Task<IActionResult> Index()
         {
@@ -49,7 +53,26 @@ namespace PharmaGoApp.Controllers
         [HttpGet]
         public IActionResult GetSchedulesByStoreAndDate(long storeId,DateTime date)
         {
-            return View();
+            var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(storeId, date);
+            var result = new List<CustomerApointmentViewModel>();
+            if (timeSlots.Count() > 0)
+            {
+                var firstSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(date));
+                result = firstSlot.Appointments.Select(x =>
+                   new CustomerApointmentViewModel()
+                   {
+                       ScheduleTime = x.ApptTime,
+                       ScheduleEndTime = x.ApptTime.AddMinutes(15)
+                   }).ToList();
+                ViewBag.StartTime = firstSlot.ScheduleStartTime.ToLongTimeString();
+                ViewBag.EndTime = firstSlot.ScheduleEndTime.ToLongTimeString();
+            }
+            else
+            {
+                ViewBag.ErrMessage = "No Time Slot Is Available For " + date.ToLongDateString();
+            } 
+            ViewBag.Date = date.ToLongDateString();
+            return PartialView(result);
         }
 
         /// <summary>
@@ -59,6 +82,7 @@ namespace PharmaGoApp.Controllers
         [HttpGet]
         public IActionResult CreateAppointment()
         {
+            ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
             return View();
         }
         /// <summary>
@@ -69,8 +93,7 @@ namespace PharmaGoApp.Controllers
         [HttpPost]
         public IActionResult CreateAppointment(CustomerApointmentViewModel model)
         {
-            model.Id = customerAppointments.Count() + 1;
-            customerAppointments.Add(model);
+            ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
             return RedirectToAction("Index");
         }
         public IActionResult Delete(int id)

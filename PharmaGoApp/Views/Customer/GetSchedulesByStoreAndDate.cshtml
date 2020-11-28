@@ -1,0 +1,50 @@
+﻿@model IEnumerable<PharmaGoApp.Models.Customer.CustomerApointmentViewModel>
+
+@{
+    ViewData["Title"] = "GetSchedulesByStoreAndDate";
+}
+
+@if (ViewBag.ErrMessage != null)
+{
+    <h2 style="background:red">
+        @ViewBag.ErrMessage
+    </h2>
+}
+else
+{
+    <h3>Schedule Date: @ViewBag.Date </h3>
+    <h3>Start Time: @ViewBag.StartTime</h3>
+    <h3>End Time: @ViewBag.EndTime</h3>
+
+    <h2>Booked Appointments:</h2>
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.ScheduleTime)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ScheduleEndTime)
+                </th>
+
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ScheduleTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ScheduleEndTime)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
