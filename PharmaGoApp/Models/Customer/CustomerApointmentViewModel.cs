@@ -10,7 +10,7 @@ namespace PharmaGoApp.Models.Customer
     {
         public long Id { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name ="Patient Name")]
         public string PatientName { get; set; }
         public string Age { get; set; }
@@ -23,6 +23,13 @@ namespace PharmaGoApp.Models.Customer
         [DataType(DataType.Time)]
         [Display(Name = "Time")]
         public DateTime ScheduleTime { get; set; }
+
+        [DataType(DataType.Time)]
+        [Display(Name = "End Time")]
+        public DateTime ScheduleEndTime { get; set; }
+
+        public long StoreId { get; set; }
+        public string StoreName { get; set; }
 
     }
 }

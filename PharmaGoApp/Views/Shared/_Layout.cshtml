@@ -9,6 +9,12 @@
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
+    <environment include="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
@@ -31,8 +37,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>*@
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
                     @if (User.Identity.IsAuthenticated)
@@ -54,6 +60,7 @@
                             else
                             {
                                 <li><a asp-area="" asp-controller="Pharmacy" asp-action="GetSchedules">Scheduler </a></li>
+                                <li><a asp-area="" asp-controller="Pharmacy" asp-action="Index">Manage Appointments</a></li>
                                 <li><a asp-area="" asp-controller="Pharmacy" asp-action="GetPrescriptions">View Prescriptions </a></li>
                             }
                             <li><a asp-area="" asp-controller="Account" asp-action="TechSupportReview">Tech Support</a></li>
@@ -61,12 +68,12 @@
 
                         else
                         {
-                            <li><a asp-area="" asp-controller="Customer" asp-action="Index">Manage Appointments</a></li>
+                            <li><a asp-area="" asp-controller="Customer" asp-action="Index">Schedule Appointment</a></li>
                             <li><a asp-area="" asp-controller="Customer" asp-action="UploadPrescription">Prescriptions</a></li>
                             <li><a asp-area="" asp-controller="Customer" asp-action="SearchMedicine">Search Medicine</a></li>
                             <li><a asp-area="" asp-controller="Account" asp-action="CustomerReview">Tech Support</a></li>
                         }
-                        
+
                         <li><a> Hello Mr./Ms. @User.Identity.Name</a>  </li>
                         <li><a asp-area="" asp-controller="Account" asp-action="UpdateAccount">Update Account</a></li>
                         <li><a asp-area="" asp-controller="Account" asp-action="LogOut">LogOut</a></li>
@@ -92,11 +99,7 @@
         </footer>
     </div>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
+    
     <environment exclude="Development">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
                 asp-fallback-src="~/lib/jquery/dist/jquery.min.js"

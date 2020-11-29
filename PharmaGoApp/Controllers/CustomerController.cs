@@ -20,16 +20,59 @@ namespace PharmaGoApp.Controllers
         private IStoreMedicineBS storeMedicineBS;
         private readonly IHostingEnvironment webHostEnvironment;
         private ICustomerPrescriptionBS customerPrescriptionBS;
-        public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, ICustomerPrescriptionBS _customerPrescriptionBS)
+        private IAppointmentBS appointmentBS;
+        private ITimeSlotsBS timeSlotsBS;
+        private IPharmaciesBS pharmaciesBS;
+        public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, 
+            ICustomerPrescriptionBS _customerPrescriptionBS, IAppointmentBS _appointmentBS, ITimeSlotsBS _timeSlotsBS, IPharmaciesBS _pharmaciesBS)
         {
             userManager = _userManager;
             storeMedicineBS = _storeMedicineBS;
             webHostEnvironment = _webHostEnvironment;
             customerPrescriptionBS = _customerPrescriptionBS;
+            appointmentBS = _appointmentBS;
+            timeSlotsBS = _timeSlotsBS;
+            pharmaciesBS = _pharmaciesBS;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(customerAppointments);
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var prescriptions = appointmentBS.GetAppointmentsByPatient(user.Id).Select(x=>
+            new CustomerApointmentViewModel() 
+            { 
+                Id=x.Id,
+                PatientName=user.UserName,
+                Date=x.TimeSlot.Date,
+                ScheduleTime=x.ApptTime,
+                StoreId=x.StoreId,
+                StoreName=x.TimeSlot.Pharmacy.Name
+            });
+            return View(prescriptions);
+        }
+
+        [HttpGet]
+        public IActionResult GetSchedulesByStoreAndDate(long storeId,DateTime date)
+        {
+            var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(storeId, date);
+            var result = new List<CustomerApointmentViewModel>();
+            if (timeSlots.Count() > 0)
+            {
+                var firstSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(date));
+                result = firstSlot.Appointments.Select(x =>
+                   new CustomerApointmentViewModel()
+                   {
+                       ScheduleTime = x.ApptTime,
+                       ScheduleEndTime = x.ApptTime.AddMinutes(15)
+                   }).ToList();
+                ViewBag.StartTime = firstSlot.ScheduleStartTime.ToLongTimeString();
+                ViewBag.EndTime = firstSlot.ScheduleEndTime.ToLongTimeString();
+            }
+            else
+            {
+                ViewBag.ErrMessage = "No Time Slot Is Available For " + date.ToLongDateString();
+            } 
+            ViewBag.Date = date.ToLongDateString();
+            return PartialView(result);
         }
 
         /// <summary>
@@ -37,8 +80,9 @@ namespace PharmaGoApp.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IActionResult Create()
+        public IActionResult CreateAppointment()
         {
+            ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
             return View();
         }
         /// <summary>
@@ -47,17 +91,32 @@ namespace PharmaGoApp.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Create(CustomerApointmentViewModel model)
+        public async Task<IActionResult> CreateAppointment(CustomerApointmentViewModel model)
         {
-            model.Id = customerAppointments.Count() + 1;
-            customerAppointments.Add(model);
-            return RedirectToAction("Index");
+            if (ModelState.IsValid)
+            {
+                var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(model.StoreId, model.Date);
+                var firstSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date));
+                var user = await userManager.FindByNameAsync(User.Identity.Name);
+                var appointment = new Appointment()
+                {
+                    StoreId=model.StoreId,
+                    CustomerId=user.Id,
+                    ApptTime=model.ScheduleTime,
+                    TimeSlotId=firstSlot.Id
+                };
+                if(appointmentBS.CreateAppointment(appointment))
+                    return RedirectToAction("Index");
+                ViewBag.ErrMassage = "Time is already Booked";
+            }
+            ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
+            return View();
         }
-        public IActionResult Delete(int id)
+        public IActionResult DeleteAppointment(int id)
         {
-            var appointment = customerAppointments.Find(x => x.Id == id);
-            customerAppointments.Remove(appointment);
-            return RedirectToAction("Index");
+            if(appointmentBS.DeleteAppointment(id))
+                return RedirectToAction("Index");
+            return View();
         }
 
         [HttpGet]
