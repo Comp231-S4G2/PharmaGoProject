@@ -54,7 +54,7 @@ namespace PharmaGo.DAL
 
         public Appointment GetAppointment(long appointmentId)
         {
-            var appointment = dbContext.Appointments.Find(appointmentId);
+            var appointment = dbContext.Appointments.Include(x=>x.TimeSlot).FirstOrDefault(x=>x.Id==appointmentId);
             return appointment;
         }
 
