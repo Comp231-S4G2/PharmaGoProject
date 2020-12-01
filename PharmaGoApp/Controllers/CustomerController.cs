@@ -120,9 +120,15 @@ namespace PharmaGoApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(long id)
         {
-            var appointment = customerAppointments.Find(x => x.Id == id);
+            var appointment = appointmentBS.GetAppointment(id);
+            var customerAppointment= new CustomerApointmentViewModel()
+            {
+                Id = appointment.Id,
+                Date = appointment.TimeSlot.Date,
+                ScheduleTime = appointment.ApptTime
+            };
             return View(appointment);
         }
         [HttpPost]
