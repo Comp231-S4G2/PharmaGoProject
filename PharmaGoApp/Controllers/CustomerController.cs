@@ -129,16 +129,22 @@ namespace PharmaGoApp.Controllers
                 Date = appointment.TimeSlot.Date,
                 ScheduleTime = appointment.ApptTime
             };
-            return View(appointment);
+            return View(customerAppointment);
         }
         [HttpPost]
         public IActionResult Edit(CustomerApointmentViewModel model)
         {
-            var appointment = customerAppointments.Find(x => x.Id == model.Id);
-            appointment.Date=model.Date;
-            appointment.ScheduleTime = model.ScheduleTime;
-            appointment.PatientName = model.PatientName;
-            return RedirectToAction("Index");
+            
+            var appointment = appointmentBS.GetAppointment(model.Id);
+            var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(appointment.StoreId, model.Date);
+            if (timeSlots.Count() > 0)
+            {
+                appointment.TimeSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date)); ;
+                appointment.ApptTime = model.ScheduleTime;
+                return RedirectToAction("Index");
+            }
+            ViewBag.ErrorMessage = "Appointment cant be schedule for: " + model.Date.ToLongDateString();
+            return View(model);
         }
 
         [HttpGet]

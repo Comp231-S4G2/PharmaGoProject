@@ -5,6 +5,13 @@
 }
 
 <h2>Reschedule Appointment</h2>
+
+@if(ViewBag.ErrorMessage != null)
+{
+    <h1 style="background:red">
+        @ViewBag.ErrorMessage
+    </h1>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">
