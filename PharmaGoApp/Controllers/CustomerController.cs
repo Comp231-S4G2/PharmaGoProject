@@ -209,7 +209,7 @@ namespace PharmaGoApp.Controllers
                 foreach(var appointment in timeSlot.Appointments)
                 {
                     TimeSpan timeSpan = appointment.ApptTime.TimeOfDay - apointmentViewModel.ScheduleTime.TimeOfDay;
-                    if (timeSpan.TotalMinutes > 14 || timeSpan.TotalMinutes < -14)
+                    if (appointment.Id!=apointmentViewModel.Id && timeSpan.TotalMinutes < 15 && timeSpan.TotalMinutes > -15)
                         return false;
                 }
                 return true;
