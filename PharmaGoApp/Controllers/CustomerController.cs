@@ -97,17 +97,23 @@ namespace PharmaGoApp.Controllers
             {
                 var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(model.StoreId, model.Date);
                 var firstSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date));
-                var user = await userManager.FindByNameAsync(User.Identity.Name);
-                var appointment = new Appointment()
+                if(ValidateDateForAppointment(timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date)), model))
                 {
-                    StoreId=model.StoreId,
-                    CustomerId=user.Id,
-                    ApptTime=model.ScheduleTime,
-                    TimeSlotId=firstSlot.Id
-                };
-                if(appointmentBS.CreateAppointment(appointment))
-                    return RedirectToAction("Index");
-                ViewBag.ErrMassage = "Time is already Booked";
+                    var user = await userManager.FindByNameAsync(User.Identity.Name);
+                    var appointment = new Appointment()
+                    {
+                        StoreId = model.StoreId,
+                        CustomerId = user.Id,
+                        ApptTime = model.ScheduleTime,
+                        TimeSlotId = firstSlot.Id
+                    };
+                    if (appointmentBS.CreateAppointment(appointment))
+                        return RedirectToAction("Index");
+                    ViewBag.ErrMassage = "Time is already Booked";
+                }
+                else
+                    ViewBag.ErrMassage = "Appointment cant be schedule for: " +model.Date.ToLongDateString();
+
             }
             ViewBag.Stores = pharmaciesBS.GetAllPharmacies();
             return View();
@@ -137,9 +143,9 @@ namespace PharmaGoApp.Controllers
             
             var appointment = appointmentBS.GetAppointment(model.Id);
             var timeSlots = timeSlotsBS.GetTimeSlotsByStoreAndDate(appointment.StoreId, model.Date);
-            if (timeSlots.Count() > 0)
+            if (timeSlots.Count() > 0&& ValidateDateForAppointment(timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date)),model))
             {
-                appointment.TimeSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date)); ;
+                appointment.TimeSlot = timeSlots.FirstOrDefault(x => x.Date.Equals(model.Date)) ;
                 appointment.ApptTime = model.ScheduleTime;
                 return RedirectToAction("Index");
             }
@@ -189,6 +195,29 @@ namespace PharmaGoApp.Controllers
             }
 
             return View();
+        }
+        /// <summary>
+        /// method is responsible to check if appointment time is not get conflicted with others
+        /// </summary>
+        /// <param name="timeSlot"></param>
+        /// <param name="apointmentViewModel"></param>
+        /// <returns></returns>
+        private bool ValidateDateForAppointment(TimeSlot timeSlot,CustomerApointmentViewModel apointmentViewModel)
+        {
+            try
+            {
+                foreach(var appointment in timeSlot.Appointments)
+                {
+                    TimeSpan timeSpan = appointment.ApptTime.TimeOfDay - apointmentViewModel.ScheduleTime.TimeOfDay;
+                    if (appointment.Id!=apointmentViewModel.Id && timeSpan.TotalMinutes < 15 && timeSpan.TotalMinutes > -15)
+                        return false;
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
     }
 }
