@@ -48,9 +48,9 @@ namespace PharmaGoApp.Controllers
 
         public IActionResult SuspendUserAccount(string id)
         {
-            if(usersBS.DeleteUser(new GPAUser()))
+            if(usersBS.DeleteUser(id))
             {
-
+                return RedirectToAction("ManageUsers");
             }
             return View();
         }
