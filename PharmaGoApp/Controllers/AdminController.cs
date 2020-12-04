@@ -32,6 +32,13 @@ namespace PharmaGoApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult ManageUsers()
+        {
+            var result = usersBS.GetGPAUsers();
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult ManageStores()
         {
             var result = pharmaciesBS.GetAllPharmacies().Select(x => new StoreViewModel()
