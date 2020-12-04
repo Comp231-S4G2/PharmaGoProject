@@ -34,8 +34,16 @@ namespace PharmaGoApp.Controllers
         [HttpGet]
         public IActionResult ManageUsers()
         {
-            var result = usersBS.GetGPAUsers();
-            return View();
+            var result = usersBS.GetGPAUsers().Select(x=>
+            new UsersViewModel() 
+            { 
+                Id=x.Id,
+                FName=x.FirstName,
+                LName=x.LastName,
+                UserName=x.UserName,
+                Email=x.Email
+            });
+            return View(result);
         }
 
         [HttpGet]
