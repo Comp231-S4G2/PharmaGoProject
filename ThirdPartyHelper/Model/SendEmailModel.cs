@@ -1,10 +1,15 @@
-﻿using System;
+﻿#region Namespaces
+
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
+
+#endregion
 
 namespace ThirdPartyHelper.Model
 {
+    /// <summary>
+    /// Model for Mail Helper
+    /// </summary>
     public class SendEmailModel
     {
         [Required]

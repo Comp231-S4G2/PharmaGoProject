@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿#region Namespaces
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
@@ -11,15 +9,31 @@ using PharmaGoApp.Models;
 using PharmaGoApp.Models.Common;
 using PharmaGoApp.Models.Constant;
 using PharmaGoApp.Models.Customer;
+using System;
+using System.Threading.Tasks;
+
+#endregion
 
 namespace PharmaGoApp.Controllers
 {
+    /// <summary>
+    /// Account Controller
+    /// Handling Account related events ex:SignUp,LogIn,LogOut,Account Modification
+    /// </summary>
     public class AccountController : Controller
     {
         UserManager<GPAUser> userManager;
         SignInManager<GPAUser> signInManager;
         IGPAUsersBS gPAUsersBS;
         IAppReviewBS appReviewBS;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="_userManager"></param>
+        /// <param name="_signInManager"></param>
+        /// <param name="_gPAUsersBS"></param>
+        /// <param name="_appReviewBS"></param>
         public AccountController(UserManager<GPAUser> _userManager, SignInManager<GPAUser> _signInManager,
                                     IGPAUsersBS _gPAUsersBS, IAppReviewBS _appReviewBS)
         {
@@ -28,17 +42,31 @@ namespace PharmaGoApp.Controllers
             gPAUsersBS = _gPAUsersBS;
             appReviewBS = _appReviewBS;
         }
+
+        /// <summary>
+        /// Index method for HomePage
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to render SignUp View
+        /// </summary>
+        /// <returns>SignUp View</returns>
         [HttpGet]
         public IActionResult SignUp()
         {
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible for signing up the user
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> SignUp(SignUpViewModel model)
         {
@@ -75,6 +103,10 @@ namespace PharmaGoApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to LogOut the user
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> LogOut()
         {
@@ -83,12 +115,21 @@ namespace PharmaGoApp.Controllers
             //return RedirectToAction("Login", "Account");
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to render LogIn View
+        /// </summary>
+        /// <returns>LogIn View</returns>
         [HttpGet]
         public IActionResult LogIn()
         {
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to do LogIn 
+        /// </summary>
+        /// <param name="model">LogInViewModel</param>
+        /// <returns>Logs In Authenticated users</returns>
         [HttpPost]
         public async Task<IActionResult> LogIn(LogInViewModel model)
         {
@@ -105,6 +146,10 @@ namespace PharmaGoApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to render UpdateAccount View
+        /// </summary>
+        /// <returns>UpdateAccount View</returns>
         public async Task<IActionResult> UpdateAccount()
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
@@ -118,6 +163,11 @@ namespace PharmaGoApp.Controllers
             return View(viewModel);
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to render UpdateAccount View
+        /// </summary>
+        /// <param name="model">SignUpViewModel</param>
+        /// <returns>updated account with Index page</returns>
         [HttpPost]
         public async Task<IActionResult> UpdateAccount(SignUpViewModel model)
         {
@@ -134,6 +184,10 @@ namespace PharmaGoApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to delete Logged In User
+        /// </summary>
+        /// <returns>Delete and LogOut</returns>
         public async Task<IActionResult> DeleteAccount()
         {
             var user = await GetLogedInUser();
@@ -149,18 +203,30 @@ namespace PharmaGoApp.Controllers
             }
             return RedirectToAction("LogOut");
         }
-
+        /// <summary>
+        /// method is responsible to return logged in user
+        /// </summary>
+        /// <returns>logged in user</returns>
         private async Task<GPAUser> GetLogedInUser()
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
             return user;
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to render Customer Review
+        /// </summary>
+        /// <returns>CustomerReview View</returns>
         public IActionResult CustomerReview()
         {
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to save Customer Review
+        /// </summary>
+        /// <param name="model">Customer Review ViewModel</param>
+        /// <returns>CustomerReview View</returns>
         [HttpPost]
         public async Task<IActionResult> CustomerReview(CustomerReviewViewModel model)
         {
@@ -180,6 +246,10 @@ namespace PharmaGoApp.Controllers
             return View();
         }
 
+        /// <summary>
+        /// ActionMethod is responsible to render TechSupportReview View
+        /// </summary>
+        /// <returns>TechSupportReview View</returns>
         public IActionResult TechSupportReview()
         {
             return View();
