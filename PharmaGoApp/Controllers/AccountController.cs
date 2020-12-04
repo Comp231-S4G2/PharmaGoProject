@@ -6,7 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
 using PharmaGo.BOL;
+using PharmaGoApp.Helper;
 using PharmaGoApp.Models;
+using PharmaGoApp.Models.Common;
 using PharmaGoApp.Models.Customer;
 
 namespace PharmaGoApp.Controllers
@@ -50,6 +52,16 @@ namespace PharmaGoApp.Controllers
                     // PharmaId=1,
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
+
+                var sendMail = new EmailJobHelperViewModel()
+                {
+                    ReceiverMailId = user.Email,
+                    Subject = "Account Created Successfully",
+                    HtmlMessage = @"<h2> Hello "+user.UserName+",</h2> "+
+                            "<h2 style='background:green'> Your Account has been created successfully.</h2>" +
+                            "<h2>We are very glad to assist you,Now you can use GoPharmaApp</h2>"
+                };
+                EmailJobHelper.SendMailHelper(sendMail);
 
                 var resultCreate = await userManager.CreateAsync(user, model.Password);
                 var resultRoleAssign = await userManager.AddToRoleAsync(user, "Customer");
@@ -126,7 +138,18 @@ namespace PharmaGoApp.Controllers
         public async Task<IActionResult> DeleteAccount()
         {
             var user = await GetLogedInUser();
-            gPAUsersBS.DeleteUser(user);
+            if (gPAUsersBS.DeleteUser(user))
+            {
+                var sendMail = new EmailJobHelperViewModel()
+                {
+                    ReceiverMailId = user.Email,
+                    Subject = "Account Deleted Successfully",
+                    HtmlMessage = @"<h2> Hello " + user.UserName + ",</h2> " +
+                            "<h2 style='background:red'> Your Account has been deleted successfully.</h2>" +
+                            "<h2>We are very sorry to loose you out.</h2>"
+                };
+                EmailJobHelper.SendMailHelper(sendMail);
+            }
             return RedirectToAction("LogOut");
         }
 
