@@ -9,6 +9,7 @@ using PharmaGo.BOL;
 using PharmaGoApp.Helper;
 using PharmaGoApp.Models;
 using PharmaGoApp.Models.Common;
+using PharmaGoApp.Models.Constant;
 using PharmaGoApp.Models.Customer;
 
 namespace PharmaGoApp.Controllers
@@ -56,10 +57,8 @@ namespace PharmaGoApp.Controllers
                 var sendMail = new EmailJobHelperViewModel()
                 {
                     ReceiverMailId = user.Email,
-                    Subject = "Account Created Successfully",
-                    HtmlMessage = @"<h2> Hello "+user.UserName+",</h2> "+
-                            "<h2 style='background:green'> Your Account has been created successfully.</h2>" +
-                            "<h2>We are very glad to assist you,Now you can use GoPharmaApp</h2>"
+                    Subject = MailConstant.AccountCreatedSubjectSubject,
+                    HtmlMessage = MailConstant.AccountCreatedMessge(user.UserName)
                 };
                 EmailJobHelper.SendMailHelper(sendMail);
 
@@ -143,10 +142,8 @@ namespace PharmaGoApp.Controllers
                 var sendMail = new EmailJobHelperViewModel()
                 {
                     ReceiverMailId = user.Email,
-                    Subject = "Account Deleted Successfully",
-                    HtmlMessage = @"<h2> Hello " + user.UserName + ",</h2> " +
-                            "<h2 style='background:red'> Your Account has been deleted successfully.</h2>" +
-                            "<h2>We are very sorry to loose you out.</h2>"
+                    Subject = MailConstant.AccountDeletionSubjectSubject,
+                    HtmlMessage = MailConstant.AccountDeletionMessge(user.UserName)
                 };
                 EmailJobHelper.SendMailHelper(sendMail);
             }
