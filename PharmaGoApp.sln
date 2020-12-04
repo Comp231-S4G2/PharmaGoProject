@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.BOL", "PharmaGo.BO
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.DAL", "PharmaGo.DAL\PharmaGo.DAL.csproj", "{BDFC7F3A-47EA-4810-B77B-85DFEC203B54}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaGo.BLL", "PharmaGo.BLL\PharmaGo.BLL.csproj", "{943D782F-65A3-4BC1-8427-D9E42CFD8A7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.BLL", "PharmaGo.BLL\PharmaGo.BLL.csproj", "{943D782F-65A3-4BC1-8427-D9E42CFD8A7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyHelper", "ThirdPartyHelper\ThirdPartyHelper.csproj", "{DDE36369-3D58-4876-8A38-5A4729F53610}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{943D782F-65A3-4BC1-8427-D9E42CFD8A7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{943D782F-65A3-4BC1-8427-D9E42CFD8A7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{943D782F-65A3-4BC1-8427-D9E42CFD8A7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDE36369-3D58-4876-8A38-5A4729F53610}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDE36369-3D58-4876-8A38-5A4729F53610}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDE36369-3D58-4876-8A38-5A4729F53610}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDE36369-3D58-4876-8A38-5A4729F53610}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
