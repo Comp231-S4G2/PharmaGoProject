@@ -10,6 +10,7 @@ using PharmaGoApp.Models.Common;
 using PharmaGoApp.Models.Constant;
 using PharmaGoApp.Models.Customer;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 #endregion
@@ -91,7 +92,11 @@ namespace PharmaGoApp.Controllers
                 EmailJobHelper.SendMailHelper(sendMail);
 
                 var resultCreate = await userManager.CreateAsync(user, model.Password);
-                var resultRoleAssign = await userManager.AddToRoleAsync(user, "Customer");
+
+                if(gPAUsersBS.GetGPAUsers().Count()>0)
+                    await userManager.AddToRoleAsync(user, "Customer");
+                else
+                    await userManager.AddToRoleAsync(user, "Admin");
                 var resultSign = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                 if (resultSign.Succeeded)
                 {
