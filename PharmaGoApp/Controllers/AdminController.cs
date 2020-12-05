@@ -113,8 +113,8 @@ namespace PharmaGoApp.Controllers
                 };
                 var resultCreate = await userManager.CreateAsync(pharmacist, model.Password);
                 var resultRoleAssign = await userManager.AddToRoleAsync(pharmacist, "Pharmacist");
-                var asstResultCreate = await userManager.CreateAsync(pharmacist, model.Password);
-                var asstResultRoleAssign = await userManager.AddToRoleAsync(pharmacist, "AsstPharmacist");
+                var asstResultCreate = await userManager.CreateAsync(asstPharmacist, model.AsstPassword);
+                var asstResultRoleAssign = await userManager.AddToRoleAsync(asstPharmacist, "AsstPharmacist");
 
                 PharmaGo.BOL.Pharmacy pharmacy = new PharmaGo.BOL.Pharmacy()
                 {
