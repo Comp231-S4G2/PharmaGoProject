@@ -97,6 +97,7 @@ namespace PharmaGoApp.Controllers
                     await userManager.AddToRoleAsync(user, "Customer");
                 else
                     await userManager.AddToRoleAsync(user, "Admin");
+
                 var resultSign = await signInManager.PasswordSignInAsync(model.UserName, model.Password, false, true);
                 if (resultSign.Succeeded)
                 {
