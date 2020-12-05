@@ -232,6 +232,7 @@ namespace PharmaGoApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                //creating ViewModel and initializing it
                 AppReview app = new AppReview()
                 {
                     FluShotServices = model.FluShotServices,
@@ -240,9 +241,11 @@ namespace PharmaGoApp.Controllers
                     OverallReview = model.OverallReview,
                     UserId = GetLogedInUser().Result.Id
                 };
+                //Add review to DB
                 appReviewBS.AddReview(app);
                 ViewBag.SuccessMsg = "Review Submited ";
             }
+            //return the view 
             return View();
         }
 
