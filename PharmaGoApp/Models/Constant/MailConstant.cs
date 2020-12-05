@@ -1,4 +1,6 @@
-﻿namespace PharmaGoApp.Models.Constant
+﻿using System;
+
+namespace PharmaGoApp.Models.Constant
 {
     /// <summary>
     /// Constant file for Mail
@@ -10,6 +12,7 @@
         public static string AccountCreatedSubject= "Account Created Successfully";
         public static string AccountDeletionSubject = "Account Deleted Successfully";
         public static string AccountRevokedSubject = "Account Revoked";
+        public static string MedAvailableSubject = "Requested Medicine Is Available";
 
         #endregion
 
@@ -33,6 +36,13 @@
             return @"<h2> Hello " + userName + ",</h2> " +
                             "<h2 style='background:red'> Due to improper use your account has been Revoked.</h2>" +
                             "<h2>We are very sorry to loose you out.</h2>";
+        }
+
+        public static string MedAvailableMessge(string userName)
+        {
+            return @"<h2> Hello " + userName + ",</h2> " +
+                            "<h2 style='background:orange'> Requested medicine is available in Stock.</h2>" +
+                            "<h2>We will be very happy to serve you .</h2>";
         }
 
         #endregion

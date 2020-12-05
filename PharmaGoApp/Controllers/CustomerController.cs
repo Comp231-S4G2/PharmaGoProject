@@ -23,8 +23,9 @@ namespace PharmaGoApp.Controllers
         private IAppointmentBS appointmentBS;
         private ITimeSlotsBS timeSlotsBS;
         private IPharmaciesBS pharmaciesBS;
+        private ICustomerMedReserveBS customerMedReserve;
         public CustomerController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IHostingEnvironment _webHostEnvironment, 
-            ICustomerPrescriptionBS _customerPrescriptionBS, IAppointmentBS _appointmentBS, ITimeSlotsBS _timeSlotsBS, IPharmaciesBS _pharmaciesBS)
+            ICustomerPrescriptionBS _customerPrescriptionBS, IAppointmentBS _appointmentBS, ITimeSlotsBS _timeSlotsBS, IPharmaciesBS _pharmaciesBS, ICustomerMedReserveBS _customerMedReserve)
         {
             userManager = _userManager;
             storeMedicineBS = _storeMedicineBS;
@@ -33,6 +34,7 @@ namespace PharmaGoApp.Controllers
             appointmentBS = _appointmentBS;
             timeSlotsBS = _timeSlotsBS;
             pharmaciesBS = _pharmaciesBS;
+            customerMedReserve = _customerMedReserve;
         }
         public async Task<IActionResult> Index()
         {
@@ -220,8 +222,18 @@ namespace PharmaGoApp.Controllers
             }
         }
 
-        public IActionResult ReserveMedicine(long id)
+        public async Task<IActionResult> ReserveMedicine(long id)
         {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+            var customerReserve = new CustomerMedReserve()
+            {
+                StockMedicineId = id,
+                CustomerId = user.Id
+            };
+            if (customerMedReserve.AddCustomerMedReserve(customerReserve))
+                ViewBag.Message = "Request for medicine has been received";
+            else
+                ViewBag.Message = "Some error occured try after some time";
             return View();
         }
     }

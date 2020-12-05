@@ -1,4 +1,5 @@
-﻿using PharmaGo.BOL;
+﻿using Microsoft.EntityFrameworkCore;
+using PharmaGo.BOL;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -50,7 +51,7 @@ namespace PharmaGo.DAL
 
         public IEnumerable<CustomerMedReserve> GetCustomerMedReserves()
         {
-            return dbContext.CustomerMedReserves;
+            return dbContext.CustomerMedReserves.Include(x=>x.Customer);
         }
     }
 }

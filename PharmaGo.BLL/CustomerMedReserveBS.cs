@@ -2,6 +2,7 @@
 using PharmaGo.DAL;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PharmaGo.BLL
@@ -9,6 +10,7 @@ namespace PharmaGo.BLL
     public interface ICustomerMedReserveBS
     {
         IEnumerable<CustomerMedReserve> GetCustomerMedReserves();
+        IEnumerable<CustomerMedReserve> GetCustomerMedReservesByStockMedId(long id);
         bool AddCustomerMedReserve(CustomerMedReserve customerMedReserve);
         bool DeleteCustomerMedReserve(long id);
     }
@@ -33,6 +35,11 @@ namespace PharmaGo.BLL
         public IEnumerable<CustomerMedReserve> GetCustomerMedReserves()
         {
             return customerMedReserveDb.GetCustomerMedReserves();
+        }
+
+        public IEnumerable<CustomerMedReserve> GetCustomerMedReservesByStockMedId(long id)
+        {
+            return GetCustomerMedReserves().Where(x=>x.StockMedicineId==id);
         }
     }
 }

@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
 using PharmaGo.BOL;
+using PharmaGoApp.Helper;
+using PharmaGoApp.Models.Common;
+using PharmaGoApp.Models.Constant;
 using PharmaGoApp.Models.Pharmacy;
 
 namespace PharmaGoApp.Controllers.Pharmacy
@@ -15,11 +18,14 @@ namespace PharmaGoApp.Controllers.Pharmacy
         IStoreMedicineBS storeMedicineBS;
         IMedicinesBS medicinesBS;
         UserManager<GPAUser> userManager;
-        public AsstPharmacistController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, IMedicinesBS _medicinesBS)
+        ICustomerMedReserveBS customerMedReserve;
+        public AsstPharmacistController(UserManager<GPAUser> _userManager, IStoreMedicineBS _storeMedicineBS, 
+            IMedicinesBS _medicinesBS, ICustomerMedReserveBS _customerMedReserve)
         {
             storeMedicineBS = _storeMedicineBS;
             userManager = _userManager;
             medicinesBS = _medicinesBS;
+            customerMedReserve = _customerMedReserve;
         }
         private async Task<GPAUser> GetLogedInUser()
         {
@@ -63,9 +69,17 @@ namespace PharmaGoApp.Controllers.Pharmacy
             storeMedicineBS.DeleteStockMedicine(id);
             return RedirectToAction("Index");
         }
+
+        /// <summary>
+        /// Method is responsible to edit the med stock
+        /// here we will fire mail to customers
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public IActionResult Edit(long id)
         {
             var stockMed = storeMedicineBS.GetStockMedicine(id);
+            
             UpdateStockMedicineViewModel stock = new UpdateStockMedicineViewModel()
             {
                 Id = stockMed.Id,
@@ -80,6 +94,17 @@ namespace PharmaGoApp.Controllers.Pharmacy
         {
             if (ModelState.IsValid)
             {
+                var customerStocks = customerMedReserve.GetCustomerMedReservesByStockMedId(model.Id);
+                foreach (var customer in customerStocks)
+                {
+                    var sendMail = new EmailJobHelperViewModel()
+                    {
+                        ReceiverMailId = customer.Customer.Email,
+                        Subject = MailConstant.MedAvailableSubject,
+                        HtmlMessage = MailConstant.MedAvailableMessge(customer.Customer.UserName)
+                    };
+                    EmailJobHelper.SendMailHelper(sendMail);
+                }
                 var stockMed = storeMedicineBS.GetStockMedicine(model.Id);
                 stockMed.Quantity = model.Quantity;
                 storeMedicineBS.UpdateStockMedicine(stockMed);
