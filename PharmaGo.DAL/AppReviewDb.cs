@@ -5,11 +5,18 @@ using System.Text;
 
 namespace PharmaGo.DAL
 {
+    /// <summary>
+    /// App review interface for DI
+    /// </summary>
     public interface IAppReviewDb
     {
         IEnumerable<AppReview> GetAppReviews();
         bool AddReview(AppReview review);
     }
+
+    /// <summary>
+    /// IAppReviewDb BAse Type 
+    /// </summary>
     public class AppReviewDb : IAppReviewDb
     {
         PGADbContext dbContext;
@@ -17,6 +24,11 @@ namespace PharmaGo.DAL
         {
             dbContext = _dbContext;
         }
+        /// <summary>
+        /// Add review to db
+        /// </summary>
+        /// <param name="review"></param>
+        /// <returns>add review to db operation result</returns>
         public bool AddReview(AppReview review)
         {
             try
@@ -31,6 +43,10 @@ namespace PharmaGo.DAL
             }
         }
 
+        /// <summary>
+        /// Return all review
+        /// </summary>
+        /// <returns>all reviews</returns>
         public IEnumerable<AppReview> GetAppReviews()
         {
             return dbContext.AppReviews;
