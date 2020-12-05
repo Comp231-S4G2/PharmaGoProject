@@ -7,8 +7,9 @@
     {
         #region Mail_Subject
 
-        public static string AccountCreatedSubjectSubject = "Account Created Successfully";
-        public static string AccountDeletionSubjectSubject = "Account Deleted Successfully";
+        public static string AccountCreatedSubject= "Account Created Successfully";
+        public static string AccountDeletionSubject = "Account Deleted Successfully";
+        public static string AccountRevokedSubject = "Account Revoked";
 
         #endregion
 
@@ -24,6 +25,13 @@
         {
             return @"<h2> Hello " + userName + ",</h2> " +
                             "<h2 style='background:red'> Your Account has been deleted successfully.</h2>" +
+                            "<h2>We are very sorry to loose you out.</h2>";
+        }
+
+        public static string AccountRevokedMessge(string userName)
+        {
+            return @"<h2> Hello " + userName + ",</h2> " +
+                            "<h2 style='background:red'> Due to improper use your account has been Revoked.</h2>" +
                             "<h2>We are very sorry to loose you out.</h2>";
         }
 

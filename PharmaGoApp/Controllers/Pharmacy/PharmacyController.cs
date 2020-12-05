@@ -18,23 +18,25 @@ namespace PharmaGoApp.Controllers.Pharmacy
         IStoreMedicineBS storeMedicineBS;
         ITimeSlotsBS TimeSlotsBS;
         UserManager<GPAUser> userManager;
+        IAppointmentBS appointmentBS;
         public static List<AppointmentViewModel> appointments = new List<AppointmentViewModel>()
         {
-            new AppointmentViewModel(){Id=1,CustomerName="Neeraj",TimeSlot="9.00 AM",Age="20"},
-            new AppointmentViewModel(){Id=2,CustomerName="Fred",TimeSlot="9.30 AM",Age="25"},
-            new AppointmentViewModel(){Id=3,CustomerName="Neeraj",TimeSlot="10.00 AM",Age="24"},
+            new AppointmentViewModel(){Id=1,CustomerName="Neeraj",TimeSlot="9.00 AM"},
+            new AppointmentViewModel(){Id=2,CustomerName="Fred",TimeSlot="9.30 AM"},
+            new AppointmentViewModel(){Id=3,CustomerName="Neeraj",TimeSlot="10.00 AM"},
         };
 
         
 
         public PharmacyController(ICustomerPrescriptionBS _customerPrescriptionBS, IGPAUsersBS _gPAUsersBS
-                                    , IStoreMedicineBS _storeMedicineBS, ITimeSlotsBS _TimeSlotsBS, UserManager<GPAUser> _userManager)
+                                    , IStoreMedicineBS _storeMedicineBS, ITimeSlotsBS _TimeSlotsBS, UserManager<GPAUser> _userManager, IAppointmentBS _appointmentBS)
         {
             customerPrescriptionBS = _customerPrescriptionBS;
             gPAUsersBS = _gPAUsersBS;
             storeMedicineBS = _storeMedicineBS;
             TimeSlotsBS = _TimeSlotsBS;
             userManager = _userManager;
+            appointmentBS = _appointmentBS;
         }
 
         private async Task<GPAUser> GetLogedInUser()
@@ -127,7 +129,16 @@ namespace PharmaGoApp.Controllers.Pharmacy
 
         public IActionResult Index()
         {
-            return View(appointments);
+            long pharmaId = 0;
+            long.TryParse(GetLogedInUser().Result.PharmaId.ToString(), out pharmaId);
+            var result = appointmentBS.GetAppointmentsByStore(pharmaId).Select(x=>new AppointmentViewModel()
+            {
+                Id=x.Id,
+                TimeSlot=x.ApptTime.ToShortTimeString(),
+                AppointmentDate=x.TimeSlot.Date.ToShortDateString(),
+                CustomerName=x.Customer.UserName
+            });
+            return View(result);
         }
 
         [HttpGet]
@@ -136,26 +147,47 @@ namespace PharmaGoApp.Controllers.Pharmacy
             return View();
         }
 
-        public IActionResult Delete(int id)
+        public IActionResult Delete(long id)
         {
-            var appointment=appointments.Find(x=>x.Id==id);
-            appointments.Remove(appointment);
+            appointmentBS.DeleteAppointment(id);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(long id)
         {
-            var appointment = appointments.Find(x => x.Id == id);
+            var result = appointmentBS.GetAppointment(id); 
+            var appointment=new AppointmentViewModel()
+            {
+                Id = result.Id,
+                TimeSlot = result.ApptTime.ToShortTimeString(),
+                AppointmentDate = result.TimeSlot.Date.ToShortDateString(),
+                CustomerName = result.Customer.UserName
+            };
             return View(appointment);
         }
 
         [HttpPost]
         public IActionResult Edit(AppointmentViewModel model)
         {
+            var result = appointmentBS.GetAppointment(model.Id);
             var appointment = appointments.Find(x => x.Id == model.Id);
             appointment.CustomerName = model.CustomerName;
-            appointment.TimeSlot = model.TimeSlot;
+            result.ApptTime = DateTime.Parse(model.TimeSlot);
+            long pharmaId = 0;
+            long.TryParse(GetLogedInUser().Result.PharmaId.ToString(), out pharmaId);
+            var slots= TimeSlotsBS.GetTimeSlotsByStoreAndDate(pharmaId, DateTime.Parse(model.AppointmentDate));
+            if (slots.Count() > 0)
+            {
+                result.TimeSlotId = slots.First().Id;
+                if (!appointmentBS.UpdateAppointment(result))
+                {
+                    ViewBag.ErrorMessage = "Cant schedule appointment ";
+                    return View();
+                }
+                    
+            }
+            
             return RedirectToAction("Index");
         }
 

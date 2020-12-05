@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PharmaGo.BLL;
 using PharmaGo.BOL;
+using PharmaGoApp.Helper;
 using PharmaGoApp.Models.Admin;
+using PharmaGoApp.Models.Common;
+using PharmaGoApp.Models.Constant;
 
 namespace PharmaGoApp.Controllers
 {
@@ -50,6 +53,14 @@ namespace PharmaGoApp.Controllers
         {
             if(usersBS.DeleteUser(id))
             {
+                var user = usersBS.GetGPAUser(id);
+                var sendMail = new EmailJobHelperViewModel()
+                {
+                    ReceiverMailId = user.Email,
+                    Subject = MailConstant.AccountRevokedSubject,
+                    HtmlMessage = MailConstant.AccountRevokedMessge(user.UserName)
+                };
+                EmailJobHelper.SendMailHelper(sendMail);
                 return RedirectToAction("ManageUsers");
             }
             return View();

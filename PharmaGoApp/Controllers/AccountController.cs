@@ -85,7 +85,7 @@ namespace PharmaGoApp.Controllers
                 var sendMail = new EmailJobHelperViewModel()
                 {
                     ReceiverMailId = user.Email,
-                    Subject = MailConstant.AccountCreatedSubjectSubject,
+                    Subject = MailConstant.AccountCreatedSubject,
                     HtmlMessage = MailConstant.AccountCreatedMessge(user.UserName)
                 };
                 EmailJobHelper.SendMailHelper(sendMail);
@@ -196,7 +196,7 @@ namespace PharmaGoApp.Controllers
                 var sendMail = new EmailJobHelperViewModel()
                 {
                     ReceiverMailId = user.Email,
-                    Subject = MailConstant.AccountDeletionSubjectSubject,
+                    Subject = MailConstant.AccountDeletionSubject,
                     HtmlMessage = MailConstant.AccountDeletionMessge(user.UserName)
                 };
                 EmailJobHelper.SendMailHelper(sendMail);

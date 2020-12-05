@@ -12,12 +12,10 @@ namespace PharmaGoApp.Models.Pharmacy
 
         [Required]
         public string CustomerName { get; set; }
-        public string Age { get; set; }
 
         [Required]
         public string TimeSlot { get; set; }
 
-        [Required]
-        public DateTime DOB { get; set; }
+        public string AppointmentDate { get; set; }
     }
 }
