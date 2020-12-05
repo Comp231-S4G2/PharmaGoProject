@@ -10,6 +10,8 @@ namespace PharmaGo.BLL
     {
         bool UpdateUser(GPAUser user);
         bool DeleteUser(GPAUser user);
+        bool DeleteUser(string  userId);
+        IEnumerable<GPAUser> GetGPAUsers();
     }
     public class GPAUsersBS : IGPAUsersBS
     {
@@ -26,6 +28,16 @@ namespace PharmaGo.BLL
         public bool DeleteUser(GPAUser user)
         {
             return usersDb.DeleteGPAUser(user.Id); 
+        }
+
+        public IEnumerable<GPAUser> GetGPAUsers()
+        {
+            return usersDb.GetGPAUsers();
+        }
+
+        public bool DeleteUser(string userId)
+        {
+            return usersDb.DeleteGPAUser(userId);
         }
     }
 }

@@ -32,6 +32,30 @@ namespace PharmaGoApp.Controllers
         }
 
         [HttpGet]
+        public IActionResult ManageUsers()
+        {
+            var result = usersBS.GetGPAUsers().Select(x=>
+            new UsersViewModel() 
+            { 
+                Id=x.Id,
+                FName=x.FirstName,
+                LName=x.LastName,
+                UserName=x.UserName,
+                Email=x.Email
+            });
+            return View(result);
+        }
+
+        public IActionResult SuspendUserAccount(string id)
+        {
+            if(usersBS.DeleteUser(id))
+            {
+                return RedirectToAction("ManageUsers");
+            }
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult ManageStores()
         {
             var result = pharmaciesBS.GetAllPharmacies().Select(x => new StoreViewModel()
