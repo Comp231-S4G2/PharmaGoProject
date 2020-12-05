@@ -50,7 +50,7 @@ namespace PharmaGoApp.Controllers.Pharmacy
                 {
                     Quantity = model.Quantity,
                     MedicineId = model.MedId,
-                    PharmaId = pharmaId,
+                    PharmacyId = pharmaId,
                 };
                 storeMedicineBS.CreateStockMedicine(stckMed);
                 return RedirectToAction("Index");

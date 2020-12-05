@@ -51,6 +51,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Pharmacy.Address)
             </td>
+            <td>
+                @Html.ActionLink("Reserve Medicine", "ReserveMedicine", new { id = item.Id }) 
+            </td>
         </tr>
 }
     </tbody>

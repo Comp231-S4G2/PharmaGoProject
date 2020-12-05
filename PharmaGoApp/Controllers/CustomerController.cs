@@ -219,5 +219,10 @@ namespace PharmaGoApp.Controllers
                 return false;
             }
         }
+
+        public IActionResult ReserveMedicine(long id)
+        {
+            return View();
+        }
     }
 }
