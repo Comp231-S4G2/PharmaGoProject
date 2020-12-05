@@ -17,10 +17,10 @@
                 @Html.DisplayNameFor(model => model.CustomerName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Age)
+                @Html.DisplayNameFor(model => model.TimeSlot)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TimeSlot)
+                @Html.DisplayNameFor(model => model.AppointmentDate)
             </th>
             <th></th>
         </tr>
@@ -35,13 +35,13 @@
                 @Html.DisplayFor(modelItem => item.CustomerName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Age)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.TimeSlot)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
+                @Html.DisplayFor(modelItem => item.AppointmentDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Id })
             </td>
         </tr>

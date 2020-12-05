@@ -17,7 +17,7 @@ namespace PharmaGo.BOL
         public int Quantity { get; set; }
 
         [ForeignKey("Pharmacies")]
-        public long PharmaId { get; set; }
+        public long PharmacyId { get; set; }
         public Pharmacy Pharmacy { get; set; }
     }
 }

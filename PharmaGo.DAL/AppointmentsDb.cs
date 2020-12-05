@@ -54,7 +54,7 @@ namespace PharmaGo.DAL
 
         public Appointment GetAppointment(long appointmentId)
         {
-            var appointment = dbContext.Appointments.Include(x=>x.TimeSlot).FirstOrDefault(x=>x.Id==appointmentId);
+            var appointment = dbContext.Appointments.Include(x=>x.TimeSlot).Include(x=>x.Customer).FirstOrDefault(x=>x.Id==appointmentId);
             return appointment;
         }
 
@@ -65,7 +65,7 @@ namespace PharmaGo.DAL
 
         public IEnumerable<Appointment> GetAppointmentsByStore(long storeId)
         {
-            return dbContext.Appointments.Where(x => x.StoreId == storeId);
+            return dbContext.Appointments.Include(x=>x.Customer).Include(x=>x.TimeSlot).Where(x => x.StoreId == storeId);
         }
 
         public bool UpdateAppointment(Appointment appointment)

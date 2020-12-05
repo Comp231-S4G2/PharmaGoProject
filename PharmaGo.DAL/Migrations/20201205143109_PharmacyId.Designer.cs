@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmaGo.DAL;
 
 namespace PharmaGo.DAL.Migrations
 {
     [DbContext(typeof(PGADbContext))]
-    partial class PGADbContextModelSnapshot : ModelSnapshot
+    [Migration("20201205143109_PharmacyId")]
+    partial class PharmacyId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,25 +231,6 @@ namespace PharmaGo.DAL.Migrations
                     b.ToTable("AppReviews");
                 });
 
-            modelBuilder.Entity("PharmaGo.BOL.CustomerMedReserve", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CustomerId");
-
-                    b.Property<long>("StockMedicineId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("StockMedicineId");
-
-                    b.ToTable("CustomerMedReserves");
-                });
-
             modelBuilder.Entity("PharmaGo.BOL.CustomerPrescription", b =>
                 {
                     b.Property<long>("Id")
@@ -445,18 +428,6 @@ namespace PharmaGo.DAL.Migrations
                     b.HasOne("PharmaGo.BOL.TimeSlot", "TimeSlot")
                         .WithMany("Appointments")
                         .HasForeignKey("TimeSlotId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("PharmaGo.BOL.CustomerMedReserve", b =>
-                {
-                    b.HasOne("PharmaGo.BOL.GPAUser", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId");
-
-                    b.HasOne("PharmaGo.BOL.StockMedicine", "StockMedicine")
-                        .WithMany()
-                        .HasForeignKey("StockMedicineId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

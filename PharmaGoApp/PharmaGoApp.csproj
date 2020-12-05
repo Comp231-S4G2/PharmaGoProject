@@ -28,6 +28,7 @@
     <ProjectReference Include="..\PharmaGo.BLL\PharmaGo.BLL.csproj" />
     <ProjectReference Include="..\PharmaGo.BOL\PharmaGo.BOL.csproj" />
     <ProjectReference Include="..\PharmaGo.DAL\PharmaGo.DAL.csproj" />
+    <ProjectReference Include="..\ThirdPartyHelper\ThirdPartyHelper.csproj" />
   </ItemGroup>
 
   <ItemGroup>
