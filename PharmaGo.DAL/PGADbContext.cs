@@ -28,7 +28,7 @@ namespace PharmaGo.DAL
         public DbSet<Medicine> Medicines { get; set; }
         public DbSet<StockMedicine> StockMedicines { get; set; }
         public DbSet<Pharmacy> Pharmacies { get; set; }
-        public DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<Appointment> Appointments { get; set; }
         public virtual DbSet<AppReview> AppReviews { get; set; }
         public DbSet<CustomerPrescription> CustomerPrescriptions { get; set; }
         public DbSet<MedDemand> MedDemands { get; set; }
