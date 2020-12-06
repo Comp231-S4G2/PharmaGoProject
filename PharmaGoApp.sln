@@ -11,9 +11,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.DAL", "PharmaGo.DA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.BLL", "PharmaGo.BLL\PharmaGo.BLL.csproj", "{943D782F-65A3-4BC1-8427-D9E42CFD8A7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyHelper", "ThirdPartyHelper\ThirdPartyHelper.csproj", "{DDE36369-3D58-4876-8A38-5A4729F53610}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThirdPartyHelper", "ThirdPartyHelper\ThirdPartyHelper.csproj", "{DDE36369-3D58-4876-8A38-5A4729F53610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaGo.DALTest", "PharmaGo.DALTest\PharmaGo.DALTest.csproj", "{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.DALTest", "PharmaGo.DALTest\PharmaGo.DALTest.csproj", "{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{29B8C2E5-9EA0-4280-B220-1D336C750046}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\..\Desktop\PharmaGo\AdministratorManual.docx = ..\..\..\Desktop\PharmaGo\AdministratorManual.docx
+		..\..\..\Desktop\PharmaGo\SetUp Tools.docx = ..\..\..\Desktop\PharmaGo\SetUp Tools.docx
+		..\..\..\Desktop\PharmaGo\UserManual.docx = ..\..\..\Desktop\PharmaGo\UserManual.docx
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
