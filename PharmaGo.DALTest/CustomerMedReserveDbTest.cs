@@ -1,8 +1,12 @@
+#region Namespaces
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PharmaGo.BOL;
 using PharmaGo.DAL;
+
+#endregion
 
 namespace PharmaGo.DALTest
 {
@@ -12,6 +16,9 @@ namespace PharmaGo.DALTest
     [TestClass]
     public class CustomerMedReserveDbTest
     {
+        /// <summary>
+        /// Asserts if object is created successfully
+        /// </summary>
         [TestMethod]
         public void GetCustomerMedReserves_Assert_If_element_is_Not_Null()
         {
