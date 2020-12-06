@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PharmaGo.BLL", "PharmaGo.BL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThirdPartyHelper", "ThirdPartyHelper\ThirdPartyHelper.csproj", "{DDE36369-3D58-4876-8A38-5A4729F53610}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaGo.DALTest", "PharmaGo.DALTest\PharmaGo.DALTest.csproj", "{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{DDE36369-3D58-4876-8A38-5A4729F53610}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DDE36369-3D58-4876-8A38-5A4729F53610}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DDE36369-3D58-4876-8A38-5A4729F53610}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F23DD0-3D45-4F6D-8A05-07D7527CB33E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
