@@ -33,6 +33,6 @@ namespace PharmaGo.DAL
         public DbSet<CustomerPrescription> CustomerPrescriptions { get; set; }
         public DbSet<MedDemand> MedDemands { get; set; }
         public DbSet<TimeSlot> TimeSlots { get; set; }
-        public DbSet<CustomerMedReserve> CustomerMedReserves { get; set; }
+        public virtual DbSet<CustomerMedReserve> CustomerMedReserves { get; set; }
     }
 }
